@@ -56,9 +56,21 @@ Create the skill to use, then have the agent summon it with a prompt: `use <skil
 
 Product Store: `https://www.demoblaze.com/`
 
+## GENERATED TEST SUITE
+
+The DemoBlaze test plan was converted into TypeScript Playwright tests saved under `./tests`.
+The original test plan is stored at `./test_deliverables/demo-store_test-plan.md`.
+
+### Run the suite
+
+1. Run all tests:
+   - `npx playwright test`
+2. List generated tests:
+   - `npx playwright test --list`
+
 ## SCOPE
 
 Build out a comprehensive suite of tests using PW-CLI for Demo Product Store. It should cover the full spectrum of tests typical of an e-commerce web application. Follow POM best practices.
 
 Time started: 16:00 EST
-TIme finished:
+Time finished:
