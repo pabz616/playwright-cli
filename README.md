@@ -59,3 +59,6 @@ Product Store: `https://www.demoblaze.com/`
 ## SCOPE
 
 Build out a comprehensive suite of tests using PW-CLI for Demo Product Store. It should cover the full spectrum of tests typical of an e-commerce web application. Follow POM best practices.
+
+Time started: 16:00 EST
+TIme finished:
