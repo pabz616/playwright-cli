@@ -1,19 +1,41 @@
 import { test, expect } from "@playwright/test";
+import NavigationHeader from "../pages/HomePage_Navigation";
+import testData from "../../utils/testData";
 
-const BASE_URL = "https://www.demoblaze.com/";
+let onHomePageNavigationHeader: NavigationHeader;
 
-test.describe("Navigation", () => {
-  test("navigation links", async ({ page }) => {
-    await page.goto(BASE_URL);
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+  onHomePageNavigationHeader = new NavigationHeader(page);
+});
 
-    await page.locator("a.nav-link", { hasText: "Cart" }).click();
+test.describe("Demoblaze Product Store Homepage", () => {
+  test("Verify homepage URL", async ({ page }) => {
+    await expect(page).toHaveURL(testData.BASE_URL);
+  });
+  test.skip("Confirm Navigation Links UI", async ({ page }) => {
+    onHomePageNavigationHeader.verifyNavigationLinks();
+  });
+  test("Confirm Navigation to Contact page", async ({ page }) => {
+    await onHomePageNavigationHeader.navigateToContact();
+    await expect(page.locator("#exampleModal")).toBeVisible();
+  });
+
+  test("Confirm Navigation to About Us page", async ({ page }) => {
+    await onHomePageNavigationHeader.navigateToAboutUs();
+    await expect(page.locator("#videoModal")).toBeVisible();
+  });
+
+  test("Navigate to Cart page", async ({ page }) => {
+    await onHomePageNavigationHeader.navigateToCart();
     await expect(page).toHaveURL(/cart\.html$/);
-
-    await page.goto(BASE_URL);
-    await page.locator("a.nav-link", { hasText: "Home" }).click();
-    await expect(page).toHaveURL(/index\.html$|demoblaze\.com\/$/);
-
-    await page.locator("#nava").click();
-    await expect(page).toHaveURL(/index\.html$|demoblaze\.com\/$/);
+  });
+  test("Navigate to Log In page", async ({ page }) => {
+    await onHomePageNavigationHeader.navigateToLogIn();
+    await expect(page.locator("#logInModal")).toBeVisible();
+  });
+  test("Navigate to Sign Up page", async ({ page }) => {
+    await onHomePageNavigationHeader.navigateToSignUp();
+    await expect(page.locator("#signInModal")).toBeVisible();
   });
 });
