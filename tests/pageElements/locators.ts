@@ -7,6 +7,12 @@ export default {
   LOGIN: "//a[contains(text(),'Log in')]",
   SIGNUP: "//a[contains(text(),'Sign up')]",
 
+  //CAROUSEL
+  ACTIVE_SLIDE: ".carousel-inner .carousel-item.active",
+  PREV_BUTTON: "a.carousel-control-prev",
+  NEXT_BUTTON: "a.carousel-control-next",
+  INDICATORS: ".carousel-indicators li",
+
   //CONTACT FORM
   contact_email_input: "#recipient-email",
   contact_name_input: "#recipient-name",

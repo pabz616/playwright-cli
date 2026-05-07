@@ -1,32 +1,20 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import testData from "../../utils/testData";
+import Carousel from "../pages/HomePage_Carousel";
 
-const BASE_URL = "https://www.demoblaze.com/";
+let onHomePageCarousel: Carousel;
 
-test.describe("Navigation", () => {
-  test("carousel navigation", async ({ page }) => {
-    await page.goto(BASE_URL);
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+  onHomePageCarousel = new Carousel(page);
+});
 
-    const activeSlide = page.locator(".carousel-inner .carousel-item.active");
-    await expect(activeSlide).toBeVisible();
-
-    await page.locator("a.carousel-control-next").click();
-    await expect(
-      page.locator(".carousel-inner .carousel-item.active"),
-    ).toBeVisible();
-
-    await page.locator("a.carousel-control-prev").click();
-    await expect(
-      page.locator(".carousel-inner .carousel-item.active"),
-    ).toBeVisible();
-
-    const indicators = page.locator(
-      ".carousel-indicators button, .carousel-indicators li",
-    );
-    if ((await indicators.count()) > 1) {
-      await indicators.nth(1).click();
-      await expect(
-        page.locator(".carousel-inner .carousel-item.active"),
-      ).toBeVisible();
-    }
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+});
+test.describe("Demoblaze Product Store Carousel", () => {
+  test("Carousel Navigation", async ({ page }) => {
+    await onHomePageCarousel.verifyCarouselUI();
   });
+
 });
