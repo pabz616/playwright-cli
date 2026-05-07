@@ -1,4 +1,5 @@
 # DemoBlaze E-Commerce Test Plan
+<img width="1387" height="414" alt="Screenshot 2026-05-07 at 4 27 05 PM" src="https://github.com/user-attachments/assets/1b1e41d7-abbd-4bd4-9d22-72bb19f2f71a" />
 
 ## Application Overview
 
