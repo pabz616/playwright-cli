@@ -1,22 +1,17 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import testData from "../../utils/testData";
+import HomePage_ShoppingCart from "../pages/HomePage_ShoppingCart";
 
-const BASE_URL = "https://www.demoblaze.com/";
-const CART_URL = "https://www.demoblaze.com/cart.html";
+let onHomePageShoppingCart: HomePage_ShoppingCart;
+
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+  onHomePageShoppingCart = new HomePage_ShoppingCart(page);
+});
 
 test.describe("Shopping cart", () => {
   test("remove product from cart", async ({ page }) => {
-    await page.goto(BASE_URL);
-    await page.locator("#tbodyid .card .card-title a").first().click();
-
-    const [addDialog] = await Promise.all([
-      page.waitForEvent("dialog"),
-      page.locator("a.btn-success", { hasText: "Add to cart" }).click(),
-    ]);
-    await addDialog.accept();
-
-    await page.goto(CART_URL);
-    const rowsBefore = await page.locator("#tbodyid tr").count();
-    await page.locator("#tbodyid tr a", { hasText: "Delete" }).first().click();
-    await expect(page.locator("#tbodyid tr")).toHaveCountLessThan(rowsBefore);
+    await onHomePageShoppingCart.addProductToCart();
+    await onHomePageShoppingCart.removeFromCart();
   });
 });

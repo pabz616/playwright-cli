@@ -1,18 +1,16 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import testData from "../../utils/testData";
+import HomePage_ShoppingCart from "../pages/HomePage_ShoppingCart";
 
-const BASE_URL = "https://www.demoblaze.com/";
+let onHomePageShoppingCart: HomePage_ShoppingCart;
+
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+  onHomePageShoppingCart = new HomePage_ShoppingCart(page);
+});
 
 test.describe("Shopping cart", () => {
   test("add product to cart", async ({ page }) => {
-    await page.goto(BASE_URL);
-    await page.locator("#tbodyid .card .card-title a").first().click();
-
-    const [dialog] = await Promise.all([
-      page.waitForEvent("dialog"),
-      page.locator("a.btn-success", { hasText: "Add to cart" }).click(),
-    ]);
-
-    expect(dialog.message()).toContain("Product added");
-    await dialog.accept();
+    await onHomePageShoppingCart.addProductToCart();
   });
 });

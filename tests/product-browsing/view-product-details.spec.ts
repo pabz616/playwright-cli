@@ -1,23 +1,16 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import testData from "../../utils/testData";
+import HomePage_ProductBrowsing from "../pages/HomePage_ProductBrowsing";
 
-const BASE_URL = "https://www.demoblaze.com/";
+let onHomePageProductBrowsing: HomePage_ProductBrowsing;
+
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+  onHomePageProductBrowsing = new HomePage_ProductBrowsing(page);
+});
 
 test.describe("Product browsing", () => {
   test("view product details", async ({ page }) => {
-    await page.goto(BASE_URL);
-    const firstProduct = page.locator("#tbodyid .card .card-title a").first();
-    const productTitle = await firstProduct.textContent();
-    await firstProduct.click();
-
-    await expect(page).toHaveURL(/prod\.html\?idp=\d+/);
-    await expect(page.locator(".name")).toBeVisible();
-    await expect(page.locator(".name")).toContainText(
-      productTitle?.trim() || "",
-    );
-    await expect(page.locator(".price-container")).toBeVisible();
-    await expect(page.locator("#more-information")).toBeVisible();
-    await expect(
-      page.locator("a.btn-success", { hasText: "Add to cart" }),
-    ).toBeVisible();
+    await onHomePageProductBrowsing.viewProductDetails();
   });
 });

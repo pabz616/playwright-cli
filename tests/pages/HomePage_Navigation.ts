@@ -12,7 +12,7 @@ class NavigationHeader {
   constructor(page: Page) {
     this.home_link = page.locator(locators.HOME);
     this.contact_link = page.locator(locators.CONTACT);
-    this.aboutUs_link = page.locator(locators.ABOUT);
+    this.aboutUs_link = page.locator(locators.ABOUT_US);
     this.cart_link = page.locator(locators.CART);
     this.logIn_link = page.locator(locators.LOGIN);
     this.signUp_link = page.locator(locators.SIGNUP);

@@ -1,26 +1,16 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import testData from "../../utils/testData";
+import HomePage_UserAuthentication from "../pages/HomePage_UserAuthentication";
 
-const BASE_URL = "https://www.demoblaze.com/";
+let onHomePageUserAuthentication: HomePage_UserAuthentication;
+
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+  onHomePageUserAuthentication = new HomePage_UserAuthentication(page);
+});
 
 test.describe("User authentication", () => {
   test("log in", async ({ page }) => {
-    const username = `user_login_${Date.now()}`;
-
-    await page.goto(BASE_URL);
-    await page.locator("#signin2").click();
-    await page.fill("#sign-username", username);
-    await page.fill("#sign-password", "Password123!");
-    const signUpDialogPromise = page.waitForEvent("dialog");
-    await page.locator("button", { hasText: "Sign up" }).click();
-    const signUpDialog = await signUpDialogPromise;
-    await signUpDialog.accept();
-
-    await page.locator("#login2").click();
-    await expect(page.locator("#logInModal")).toBeVisible();
-    await page.fill("#loginusername", username);
-    await page.fill("#loginpassword", "Password123!");
-
-    await page.locator("button", { hasText: "Log in" }).click();
-    await expect(page.locator("#nameofuser")).toContainText(username);
+    await onHomePageUserAuthentication.logIn();
   });
 });

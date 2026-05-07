@@ -1,16 +1,16 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import testData from "../../utils/testData";
+import HomePage_StaticPages from "../pages/HomePage_StaticPages";
 
-const BASE_URL = "https://www.demoblaze.com/";
+let onHomePageStaticPages: HomePage_StaticPages;
+
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+  onHomePageStaticPages = new HomePage_StaticPages(page);
+});
 
 test.describe("Static pages", () => {
   test("about us", async ({ page }) => {
-    await page.goto(BASE_URL);
-    await page.locator("a.nav-link", { hasText: "About us" }).click();
-
-    await expect(page.locator("#videoModal")).toBeVisible();
-    await expect(page.locator("#videoModal .modal-body")).toBeVisible();
-    await expect(page.locator("#videoModal .modal-body")).toContainText(
-      /about/i,
-    );
+    await onHomePageStaticPages.aboutUs();
   });
 });

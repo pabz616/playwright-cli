@@ -1,25 +1,18 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import testData from "../../utils/testData";
+import HomePage_ProductBrowsing from "../pages/HomePage_ProductBrowsing";
 
-const BASE_URL = "https://www.demoblaze.com/";
+let onHomePageProductBrowsing: HomePage_ProductBrowsing;
 
-async function verifyCategory(page, categoryName: string) {
-  await page.locator("a#itemc", { hasText: categoryName }).click();
-  const cards = page.locator("#tbodyid .card");
-  expect(await cards.count()).toBeGreaterThan(0);
-  await expect(page.locator("#tbodyid .card img")).toBeVisible();
-  await expect(page.locator("#tbodyid .card .card-title a")).toBeVisible();
-  await expect(page.locator("#tbodyid .card .card-text")).toBeVisible();
-
-  const priceLocator = page.locator("#tbodyid .card .card-text");
-  await expect(priceLocator.first()).toContainText("$");
-}
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+  onHomePageProductBrowsing = new HomePage_ProductBrowsing(page);
+});
 
 test.describe("Product browsing", () => {
   test("filter by category", async ({ page }) => {
-    await page.goto(BASE_URL);
-
-    await verifyCategory(page, "Phones");
-    await verifyCategory(page, "Laptops");
-    await verifyCategory(page, "Monitors");
+    await onHomePageProductBrowsing.filterByCategory("Phones");
+    await onHomePageProductBrowsing.filterByCategory("Laptops");
+    await onHomePageProductBrowsing.filterByCategory("Monitors");
   });
 });
