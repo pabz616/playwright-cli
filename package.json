@@ -1,0 +1,23 @@
+{
+  "name": "playwright-cli",
+  "version": "1.0.0",
+  "description": "CLI Tutorial for Playwright",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pabz616/playwright-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/pabz616/playwright-cli/issues"
+  },
+  "homepage": "https://github.com/pabz616/playwright-cli#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.1"
+  }
+}
