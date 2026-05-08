@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
-import testData from "../../utils/testData";
-import HomePage_ProductBrowsing from "../pages/HomePage_ProductBrowsing";
+import testData from "../../../utils/testData";
+import HomePage_ProductBrowsing from "../../pages/ProductBrowsing";
 
 let onHomePageProductBrowsing: HomePage_ProductBrowsing;
 
@@ -9,8 +9,8 @@ test.beforeEach(async ({ page }) => {
   onHomePageProductBrowsing = new HomePage_ProductBrowsing(page);
 });
 
-test.describe("Product browsing", () => {
-  test("browse home page", async ({ page }) => {
+test.describe("Demoblaze Product Store - Product browsing", () => {
+  test("Browse Home Page", async ({ page }) => {
     await onHomePageProductBrowsing.verifyHomePage();
   });
 });

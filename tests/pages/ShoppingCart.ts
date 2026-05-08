@@ -1,7 +1,7 @@
 import { type Page, type Locator, expect } from "@playwright/test";
 import locators from "../pageElements/locators";
 
-class HomePage_ShoppingCart {
+class ShoppingCart {
   private page: Page;
   private firstProductTitle: Locator;
   private addToCartButton: Locator;
@@ -81,4 +81,4 @@ class HomePage_ShoppingCart {
   }
 }
 
-export default HomePage_ShoppingCart;
+export default ShoppingCart;

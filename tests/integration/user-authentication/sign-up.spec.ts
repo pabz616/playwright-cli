@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
-import testData from "../../utils/testData";
-import HomePage_UserAuthentication from "../pages/HomePage_UserAuthentication";
+import testData from "../../../utils/testData";
+import HomePage_UserAuthentication from "../../pages/UserAuthentication";
 
 let onHomePageUserAuthentication: HomePage_UserAuthentication;
 
@@ -10,8 +10,12 @@ test.beforeEach(async ({ page }) => {
   onHomePageUserAuthentication = new HomePage_UserAuthentication(page);
 });
 
-test.describe("User authentication", () => {
-  test("sign up validation", async ({ page }) => {
+test.describe("Demoblaze Product Store - User Account Creation", () => {
+  test("Sign up validation", async ({ page }) => {
     await onHomePageUserAuthentication.signUpValidation();
+  });
+
+  test("Sign up", async ({ page }) => {
+    await onHomePageUserAuthentication.signUp();
   });
 });

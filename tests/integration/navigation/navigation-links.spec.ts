@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import NavigationHeader from "../pages/HomePage_Navigation";
-import testData from "../../utils/testData";
+import NavigationHeader from "../../pages/Navigation";
+import testData from "../../../utils/testData";
 
 let onHomePageNavigationHeader: NavigationHeader;
 

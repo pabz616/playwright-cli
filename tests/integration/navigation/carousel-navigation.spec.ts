@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
-import testData from "../../utils/testData";
-import Carousel from "../pages/HomePage_Carousel";
+import testData from "../../../utils/testData";
+import Carousel from "../../pages/Carousel";
 
 let onHomePageCarousel: Carousel;
 

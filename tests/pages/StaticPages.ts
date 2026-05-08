@@ -1,7 +1,7 @@
 import { type Page, type Locator, expect } from "@playwright/test";
 import locators from "../pageElements/locators";
 
-class HomePage_StaticPages {
+class StaticPages {
   private page: Page;
   private contactLink: Locator;
   private aboutUsLink: Locator;
@@ -40,4 +40,4 @@ class HomePage_StaticPages {
   }
 }
 
-export default HomePage_StaticPages;
+export default StaticPages;
