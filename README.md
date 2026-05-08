@@ -72,5 +72,5 @@ The original test plan is stored at `./test_deliverables/demo-store_test-plan.md
 
 Build out a comprehensive suite of tests using PW-CLI for Demo Product Store. It should cover the full spectrum of tests typical of an e-commerce web application. Follow POM best practices.
 
-Time started: 16:00 EST
-Time finished:
+Time started:  16:00 EST
+Time finished: 20:00 EST
