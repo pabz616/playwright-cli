@@ -1,4 +1,11 @@
 {
   "snyk.advanced.organization": "da41c350-f466-4c5b-9a5b-1b7ef925daad",
-  "snyk.advanced.autoSelectOrganization": true
+  "snyk.advanced.autoSelectOrganization": true,
+  "cSpell.words": ["Demoblaze"],
+  "chat.tools.terminal.autoApprove": {
+    "/^cd /Users/pablovergara/Desktop/automation/playwright-cli && node <<'NODE'\nconst playwright = require\\('playwright'\\);\n\\(async \\(\\) => \\{\n  const browser = await playwright\\.chromium\\.launch\\(\\{ headless: true \\}\\);\n  const page = await browser\\.newPage\\(\\);\n  page\\.on\\('dialog', async dialog => \\{\n    console\\.log\\('dialog message:', dialog\\.message\\(\\)\\);\n    await dialog\\.accept\\(\\);\n  \\}\\);\n  await page\\.goto\\('https://www\\.demoblaze\\.com/'\\);\n  await page\\.click\\('#signin2'\\);\n  await page\\.waitForTimeout\\(500\\);\n  console\\.log\\('modal visible after open:', await page\\.evaluate\\(\\(\\) => \\{\n    const modal = document\\.querySelector\\('#signInModal'\\);\n    return modal \\? window\\.getComputedStyle\\(modal\\)\\.display : 'none';\n  \\}\\)\\);\n  await page\\.click\\('#signInModal button\\.btn-primary'\\);\n  await page\\.waitForTimeout\\(500\\);\n  console\\.log\\('modal visible after empty submit:', await page\\.evaluate\\(\\(\\) => \\{\n    const modal = document\\.querySelector\\('#signInModal'\\);\n    return modal \\? window\\.getComputedStyle\\(modal\\)\\.display : 'none';\n  \\}\\)\\);\n  await browser\\.close\\(\\);\n\\}\\)\\(\\);\nNODE$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  }
 }
