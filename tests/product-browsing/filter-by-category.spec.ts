@@ -10,9 +10,14 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Product browsing", () => {
-  test("filter by category", async ({ page }) => {
+  test("Filter by Phones", async ({ page }) => {
     await onHomePageProductBrowsing.filterByCategory("Phones");
+  });
+  test("Filter by Laptops", async ({ page }) => {
     await onHomePageProductBrowsing.filterByCategory("Laptops");
+  });
+    test("Filter by Monitors", async ({ page }) => {
     await onHomePageProductBrowsing.filterByCategory("Monitors");
   });
+
 });

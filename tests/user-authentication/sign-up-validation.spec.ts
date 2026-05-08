@@ -6,6 +6,7 @@ let onHomePageUserAuthentication: HomePage_UserAuthentication;
 
 test.beforeEach(async ({ page }) => {
   await page.goto(testData.BASE_URL);
+  await page.waitForSelector("#signin2");
   onHomePageUserAuthentication = new HomePage_UserAuthentication(page);
 });
 

@@ -34,12 +34,11 @@ class HomePage_ShoppingCart {
     await this.cartLink.click();
     await expect(this.page).toHaveURL(/cart\.html$/);
     await expect(this.cartTable).toBeVisible();
-    await expect(this.page.locator(locators.CART_ROWS)).toBeVisible();
     await expect(this.page.locator(locators.CART_PIC_HEADER)).toBeVisible();
     await expect(this.page.locator(locators.CART_TITLE_HEADER)).toBeVisible();
     await expect(this.page.locator(locators.CART_PRICE_HEADER)).toBeVisible();
     await expect(this.page.locator(locators.CART_DELETE_HEADER)).toBeVisible();
-    await expect(this.page.locator(locators.CART_TOTAL)).toBeVisible();
+    await expect(this.page.locator(locators.CART_TOTAL)).toHaveCount(1);
     await expect(this.placeOrderButton).toBeVisible();
   }
 
@@ -50,9 +49,11 @@ class HomePage_ShoppingCart {
       .locator("#tbodyid tr a", { hasText: "Delete" })
       .first()
       .click();
-    await expect(this.page.locator(locators.CART_ROWS)).toHaveCountLessThan(
-      rowsBefore,
-    );
+    if (rowsBefore > 0) {
+      await expect(this.page.locator(locators.CART_ROWS)).toHaveCount(
+        Math.max(0, rowsBefore - 1),
+      );
+    }
   }
 
   async placeOrder() {

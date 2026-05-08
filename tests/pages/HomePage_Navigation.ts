@@ -7,7 +7,7 @@ class NavigationHeader {
   readonly aboutUs_link: Locator;
   readonly cart_link: Locator;
   readonly logIn_link: Locator;
-  readonly signUp_link: Locator;
+  readonly SIGN_UP_link: Locator;
 
   constructor(page: Page) {
     this.home_link = page.locator(locators.HOME);
@@ -15,7 +15,7 @@ class NavigationHeader {
     this.aboutUs_link = page.locator(locators.ABOUT_US);
     this.cart_link = page.locator(locators.CART);
     this.logIn_link = page.locator(locators.LOGIN);
-    this.signUp_link = page.locator(locators.SIGNUP);
+    this.SIGN_UP_link = page.locator(locators.SIGN_UP);
   }
 
   async verifyNavigationLinks() {
@@ -34,8 +34,8 @@ class NavigationHeader {
     await expect(this.logIn_link).toBeVisible();
     await expect(this.logIn_link).toBeEnabled();
     //
-    await expect(this.signUp_link).toBeVisible();
-    await expect(this.signUp_link).toBeEnabled();
+    await expect(this.SIGN_UP_link).toBeVisible();
+    await expect(this.SIGN_UP_link).toBeEnabled();
   }
 
   async navigateToHome() {
@@ -57,7 +57,7 @@ class NavigationHeader {
   }
 
   async navigateToSignUp() {
-    await this.signUp_link.click();
+    await this.SIGN_UP_link.click();
   }
 }
 

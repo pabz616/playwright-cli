@@ -5,7 +5,8 @@ export default {
   ABOUT_US: 'a.nav-link:has-text("About us")',
   CART: 'a.nav-link:has-text("Cart")',
   LOGIN: 'a.nav-link:has-text("Log in")',
-  SIGNUP: "#signin2",
+  LOG_IN: 'a.nav-link:has-text("Log in")',
+  SIGN_UP: "#signin2",
 
   // CAROUSEL
   ACTIVE_SLIDE: ".carousel-inner .carousel-item.active",
@@ -65,6 +66,6 @@ export default {
   SIGN_USERNAME: "#sign-username",
   SIGN_PASSWORD: "#sign-password",
   LOG_IN_BUTTON: 'button:has-text("Log in")',
-  SIGN_UP_BUTTON: 'button:has-text("Sign up")',
+  SIGN_UP_BUTTON: "#signInModal button.btn-primary",
   NAME_OF_USER: "#nameofuser",
 };

@@ -36,20 +36,56 @@ class HomePage_UserAuthentication {
   }
 
   async signUpValidation() {
-    await this.signUpLink.click();
+    await expect(this.signUpLink).toBeVisible();
+    await this.page.evaluate(() => {
+      const link = document.querySelector("#signin2");
+      if (link) (link as HTMLElement).click();
+    });
+    await this.page.waitForTimeout(1000);
+    await expect(this.page.locator("#signInModal")).toHaveClass(
+      "modal fade show",
+    );
+
+    const emptyDialogPromise = this.page.waitForEvent("dialog");
+    await this.page.evaluate(() => {
+      const button = document.querySelector<HTMLButtonElement>(
+        "#signInModal button.btn-primary",
+      );
+      if (button) setTimeout(() => button.click(), 0);
+    });
+    const emptyDialog = await emptyDialogPromise;
+    expect(emptyDialog.message()).toMatch(/Please fill|empty|username/i);
+    await emptyDialog.accept();
+
     await expect(this.signInModal).toBeVisible();
-
-    await this.page.locator(locators.SIGN_UP_BUTTON).click();
-
     const username = `demo_user_${Date.now()}`;
     await this.page.fill(locators.SIGN_USERNAME, username);
     await this.page.fill(locators.SIGN_PASSWORD, "Password123!");
-    await this.page.locator(locators.SIGN_UP_BUTTON).click();
 
-    await this.signUpLink.click();
+    await expect(this.signInModal).toBeVisible();
+    const successDialogPromise = this.page.waitForEvent("dialog");
+    await this.page.locator(locators.SIGN_UP_BUTTON).click();
+    const successDialog = await successDialogPromise;
+    await successDialog.accept();
+
+    await expect(this.signUpLink).toBeVisible();
+    await this.page.evaluate(() => {
+      const link = document.querySelector("#signin2");
+      if (link) (link as HTMLElement).click();
+    });
+    await this.page.waitForTimeout(1000);
+    await expect(this.page.locator("#signInModal")).toHaveClass(
+      "modal fade show",
+    );
     await this.page.fill(locators.SIGN_USERNAME, username);
     await this.page.fill(locators.SIGN_PASSWORD, "Password123!");
+
+    await expect(this.signInModal).toBeVisible();
+    const duplicateDialogPromise = this.page.waitForEvent("dialog");
     await this.page.locator(locators.SIGN_UP_BUTTON).click();
+    const duplicateDialog = await duplicateDialogPromise;
+    expect(duplicateDialog.message()).toMatch(/exist|already/i);
+    await duplicateDialog.accept();
   }
 
   async logIn() {
