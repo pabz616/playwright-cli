@@ -125,7 +125,7 @@ test.describe("Demoblaze Product Store - Reliability", () => {
       try {
         await randomAction();
       } catch (e) {
-        console.log(`Chaos action failed: ${e.message}`);
+        // console.log(`Chaos action failed: ${e.message}`);
         await page.goto(testData.BASE_URL);
       }
       await page.waitForTimeout(500);
