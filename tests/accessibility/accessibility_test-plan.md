@@ -20,7 +20,6 @@
 
 10. **Color contrast compliance** - Specifically tests color contrast ratios (logs issues but doesn't fail the test as this is often a design consideration).
 
-
 ## Key Features of the Tests
 
 - **Selective violation checking**: Instead of expecting zero violations (which is unrealistic for most sites), the tests focus on critical accessibility issues that would prevent users from using the site.
@@ -35,6 +34,6 @@ The tests use `@axe-core/playwright` to perform comprehensive accessibility audi
 
 ## As of May 2026
 
-### Tests NOT passing (8):
+### Tests NOT passing (8)
 
 The 8 failing tests are correctly catching real accessibility deficiencies in the DemoBlaze demo site. These tests serve as good documentation of the site's current accessibility gaps and can be addressed by the site owners to improve compliance with WCAG standards.
