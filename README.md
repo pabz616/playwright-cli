@@ -16,9 +16,12 @@ The CLI returns compact references for each element on the page. The element get
 3. Install Skills - `playwright-cli install --skills`.
 4. Work through the prompts below.
 
-## Reference material: 
+## REFERENCE MATERIALS
 
 * Playwright CLI: `https://github.com/microsoft/playwright-cli`
+* Playwright + Accessibility: `https://playwright.dev/docs/accessibility-testing`
+* Accessibility Insights: `https://accessibilityinsights.io/docs/web/overview/?referrer=playwright-accessibility-testing-js`
+* Accessibility Tools: `https://accessibility.psu.edu/testing/testingtools/`
 * Reliability Testing: `https://learn.microsoft.com/en-us/azure/well-architected/reliability/checklist`
 * Chaos Testing: `https://dzone.com/articles/ultimate-chaos-testing-guide` || Testing w. Litmus MCP `https://litmuschaos.io/`
 
