@@ -14,7 +14,7 @@ class NavigationHeader {
     this.contact_link = page.locator(locators.CONTACT);
     this.aboutUs_link = page.locator(locators.ABOUT_US);
     this.cart_link = page.locator(locators.CART);
-    this.logIn_link = page.locator(locators.LOGIN);
+    this.logIn_link = page.locator(locators.LOG_IN);
     this.SIGN_UP_link = page.locator(locators.SIGN_UP);
   }
 
@@ -38,27 +38,12 @@ class NavigationHeader {
     await expect(this.SIGN_UP_link).toBeEnabled();
   }
 
-  async navigateToHome() {
-    await this.home_link.click();
-  }
-
-  async navigateToContact() {
-    await this.contact_link.click();
-  }
-  async navigateToAboutUs() {
-    await this.aboutUs_link.click();
-  }
-  async navigateToCart() {
-    await this.cart_link.click();
-  }
-
-  async navigateToLogIn() {
-    await this.logIn_link.click();
-  }
-
-  async navigateToSignUp() {
-    await this.SIGN_UP_link.click();
-  }
+  async navigateToHome() {await this.home_link.click();}
+  async navigateToContact() {await this.contact_link.click();}
+  async navigateToAboutUs() {await this.aboutUs_link.click();}
+  async navigateToCart() {await this.cart_link.click();}
+  async navigateToLogIn() {await this.logIn_link.click();}
+  async navigateToSignUp() {await this.SIGN_UP_link.click();}
 }
 
 export default NavigationHeader;
