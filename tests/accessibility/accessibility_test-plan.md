@@ -32,3 +32,9 @@
 - **Logging for review**: Some tests log violations to the console for manual review without failing the test.
 
 The tests use `@axe-core/playwright` to perform comprehensive accessibility audits and provide detailed feedback on any issues found. This gives you a robust accessibility testing suite that can help ensure your application remains accessible to all users.
+
+## As of May 2026
+
+### Tests NOT passing (8):
+
+The 8 failing tests are correctly catching real accessibility deficiencies in the DemoBlaze demo site. These tests serve as good documentation of the site's current accessibility gaps and can be addressed by the site owners to improve compliance with WCAG standards.
