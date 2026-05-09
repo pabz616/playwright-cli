@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "CLI Tutorial for Playwright",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:performance": "playwright test performance/",
+    "test:performance:checkout": "playwright test performance/checkout-performance.spec.ts",
+    "test:performance:load": "playwright test performance/checkout-performance.spec.ts -g 'load test'",
+    "test:performance:spike": "playwright test performance/checkout-performance.spec.ts -g 'spike test'",
+    "test:performance:stress": "playwright test performance/checkout-performance.spec.ts -g 'stress test'",
+    "test:performance:network": "playwright test performance/checkout-performance.spec.ts -g 'slow network'"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pabz616/playwright-cli.git"
