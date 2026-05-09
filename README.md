@@ -14,11 +14,15 @@ The CLI returns compact references for each element on the page. The element get
 1. Install latest playwright globally - `npm init playwright@latest` (the language to select is either TS or JS).
 2. Install CLI - `npm install -g @playwright/cli@latest`.
 3. Install Skills - `playwright-cli install --skills`.
-4. Work through the prompts below.
+4. Install @axe-core/playwright: `npm install --save-dev @axe-core/playwright`
+5. Work through the prompts below.
 
-## Reference material: 
+## REFERENCE MATERIALS
 
 * Playwright CLI: `https://github.com/microsoft/playwright-cli`
+* Playwright + Accessibility: `https://playwright.dev/docs/accessibility-testing`
+* Accessibility Insights: `https://accessibilityinsights.io/docs/web/overview/?referrer=playwright-accessibility-testing-js`
+* Accessibility Tools: `https://accessibility.psu.edu/testing/testingtools/`
 * Reliability Testing: `https://learn.microsoft.com/en-us/azure/well-architected/reliability/checklist`
 * Chaos Testing: `https://dzone.com/articles/ultimate-chaos-testing-guide` || Testing w. Litmus MCP `https://litmuschaos.io/`
 
@@ -32,9 +36,25 @@ The CLI returns compact references for each element on the page. The element get
 6. Test results for the given work: `Generate a report for the test results and provide actionable next-steps`
 7. Evaluate the output from the agent and "massage" the script to suit the needs.
 8. Create the sample structure for the agent to follow:
-   1. The locators go in the `./pageElements/locators.ts` director
+   1. The locators go in the `./pageElements/locators.ts` directory
    2. The page objects go in the `./pages/<name>Pages` directory
    3. Test are refactored to reduce repeated code.
+   4. The structure of the framework should look something like:
+      1. `./tests`
+         1. `/e2e/*`
+         2. `/api/*`
+         3. `/accessibility/*`
+         4. `/integration/*`
+         5. `/usability/*`
+         6. `/reliability/*`
+         7. `/performance/*`
+         8. `/security/*`
+         9. `/visual/*`
+      2. `/utilities`
+         1. `/test-data`
+      3. `test-results`
+      4. `test-deliverables`
+         1. `documentation` .. if relevant
 9. Generate the prompt to refactor all generated tests: `Following the example in {insert file} refactor all the tests to match this structure`
 10. Evaluate the output and make corrections as needed.
 11. Run the tests and troubleshoot for the first pass. Then have the agent "heal" the tests. `Run the tests in <folder> and fix what is failing`
