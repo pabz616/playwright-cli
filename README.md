@@ -26,6 +26,16 @@ Reference material: `https://github.com/microsoft/playwright-cli`
 4. Test generation for a critical path: `Explore the website, identify the most critical user workflow, .then generate tests`
 5. Run the tests: `playwright-cli run_tests <folder_name> or <test_name>`
 6. Test results for the given work: `Generate a report for the test results and provide actionable next-steps`
+7. Evaluate the output from the agent and "massage" the script to suit the needs.
+8. Create the sample structure for the agent to follow:
+   1. The locators go in the `./pageElements/locators.ts` director
+   2. The page objects go in the `./pages/<name>Pages` directory
+   3. Test are refactored to reduce repeated code.
+9. Generate the prompt to refactor all generated tests: `Following the example in {insert file} refactor all the tests to match this structure`
+10. Evaluate the output and make corrections as needed.
+11. Run the tests and troubleshoot for the first pass. Then have the agent "heal" the tests. `Run the tests in <folder> and fix what is failing`
+12. Keep going until everything passes :check:
+13. Commit the code then continue to build out the framework including tests for accessibility, performance, reliability, usability, security (if applicable), APIs, and so on.
 
 ## USING THE AGENT
 
