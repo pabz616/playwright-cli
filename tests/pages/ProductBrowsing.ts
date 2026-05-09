@@ -25,7 +25,7 @@ class HomePage_ProductBrowsing {
     await expect(this.page.locator(locators.CONTACT)).toBeVisible();
     await expect(this.page.locator(locators.ABOUT_US)).toBeVisible();
     await expect(this.page.locator(locators.CART)).toBeVisible();
-    await expect(this.page.locator(locators.LOGIN)).toBeVisible();
+    await expect(this.page.locator(locators.LOG_IN)).toBeVisible();
     await expect(this.page.locator(locators.SIGN_UP)).toBeVisible();
 
     const carouselItems = this.page.locator(locators.ACTIVE_SLIDE);

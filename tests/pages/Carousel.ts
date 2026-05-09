@@ -18,13 +18,12 @@ class Carousel {
 
   async verifyCarouselUI() {
     await expect(this.activeSlide).toBeVisible();
-    //
+  
     await expect(this.nextButton).toBeVisible();
     await expect(this.nextButton).toBeEnabled();
-    //
+    
     await expect(this.prevButton).toBeVisible();
     await expect(this.prevButton).toBeEnabled();
-    //
 
     if ((await this.indicators.count()) > 1) {
       await this.indicators.nth(1).click();

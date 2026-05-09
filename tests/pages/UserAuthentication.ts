@@ -24,9 +24,7 @@ class UserAuthentication {
 
     const username = `demo_user_${Date.now()}`;
 
-    //TODO - Tests fail to find element
     await this.page.waitForTimeout(1000);
-
     await this.page.fill(locators.SIGN_USERNAME, username);
     await this.page.fill(locators.SIGN_PASSWORD, "Password123!");
 
