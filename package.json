@@ -18,6 +18,6 @@
   "homepage": "https://github.com/pabz616/playwright-cli#readme",
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "@types/node": "^25.6.1"
+    "@types/node": "^25.6.2"
   }
 }
