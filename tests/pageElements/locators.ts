@@ -4,7 +4,6 @@ export default {
   CONTACT: 'a.nav-link:has-text("Contact")',
   ABOUT_US: 'a.nav-link:has-text("About us")',
   CART: 'a.nav-link:has-text("Cart")',
-  LOGIN: 'a.nav-link:has-text("Log in")',
   LOG_IN: 'a.nav-link:has-text("Log in")',
   SIGN_UP: "#signin2",
 
@@ -51,6 +50,7 @@ export default {
 
   // STATIC PAGES
   CONTACT_MODAL: "#exampleModal",
+  CONTACT_CLOSE_BUTTON: "#exampleModal .close",
   VIDEO_MODAL: "#videoModal",
   RECIPIENT_EMAIL: "#recipient-email",
   RECIPIENT_NAME: "#recipient-name",
@@ -60,7 +60,9 @@ export default {
 
   // USER AUTHENTICATION
   LOG_IN_MODAL: "#logInModal",
+  LOG_IN_CLOSE_BUTTON: "#logInModal .close",
   SIGN_IN_MODAL: "#signInModal",
+  SIGN_IN_CLOSE_BUTTON: "#signInModal .close",
   LOGIN_USERNAME: "#loginusername",
   LOGIN_PASSWORD: "#loginpassword",
   SIGN_USERNAME: '//input[@id="sign-username"]',
