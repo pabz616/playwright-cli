@@ -5,6 +5,16 @@
 
 DemoBlaze is a demo e-commerce website that simulates a product store selling electronic devices such as phones, laptops, and monitors. The application features product browsing by categories, detailed product pages, shopping cart functionality, user authentication (sign up and log in), and static pages for contact and about information. It uses modals for user interactions and maintains cart state.
 
+### TECH STACK
+
+- Video Codex - `videoPlayerJS 7.6.5`
+- Web Tech - `HTTP`
+- Load Balancing - `Google Cloud Load Balancing`
+- UI Framework - `Bootstrap`
+- Javascript Libraries - `JQuery 3.2.1`
+- Performance - `Google Cloud Trace`
+- IAAS - `Google Cloud`
+
 ## Test Strategy
 
 ### Approach

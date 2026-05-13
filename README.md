@@ -14,8 +14,9 @@ The CLI returns compact references for each element on the page. The element get
 1. Install latest playwright globally - `npm init playwright@latest` (the language to select is either TS or JS).
 2. Install CLI - `npm install -g @playwright/cli@latest`.
 3. Install Skills - `playwright-cli install --skills`.
-4. Install @axe-core/playwright: `npm install --save-dev @axe-core/playwright`
-5. Work through the prompts below.
+4. Install Faker Data Library - `npm install --save-dev @faker-js/faker`
+5. Install @axe-core/playwright: `npm install --save-dev @axe-core/playwright`
+6. Work through the prompts below.
 
 ## REFERENCE MATERIALS
 
