@@ -64,6 +64,7 @@ export default {
   LOGIN_USERNAME: "#loginusername",
   LOGIN_PASSWORD: "#loginpassword",
   LOG_IN_BUTTON: 'button:has-text("Log in")',
+  LOG_OUT_BUTTON: 'a.nav-link:has-text("Log out")',
 
   // USER IS AUTHENTICATED
   NAME_OF_USER: "#nameofuser",
