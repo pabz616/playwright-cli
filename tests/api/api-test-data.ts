@@ -3,37 +3,37 @@
  * Provides test data generators and helper utilities for Demoblaze API testing
  */
 
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 export const API_TEST_DATA = {
   // Valid test credentials
   VALID_USER: {
-    username: `testuser_${faker.string.alphanumeric(8)}`,
-    password: 'TestPassword123!@',
+    username: `testuser_${faker.string.alphanumeric(8)}@test.com`,
+    password: "TestPassword123!@",
     email: faker.internet.email(),
   },
 
   // Invalid credentials for negative testing
   INVALID_USERS: [
     {
-      username: '',
-      password: '',
-      description: 'Empty credentials',
+      username: "",
+      password: "",
+      description: "Empty credentials",
     },
     {
-      username: 'onlyusername',
-      password: '',
-      description: 'Missing password',
+      username: "onlyusername",
+      password: "",
+      description: "Missing password",
     },
     {
-      username: '',
-      password: 'onlypassword',
-      description: 'Missing username',
+      username: "",
+      password: "onlypassword",
+      description: "Missing username",
     },
     {
-      username: 'a',
-      password: '123',
-      description: 'Very short credentials',
+      username: "a",
+      password: "123",
+      description: "Very short credentials",
     },
   ],
 
@@ -49,50 +49,50 @@ export const API_TEST_DATA = {
   // XSS payloads
   XSS_PAYLOADS: [
     '<script>alert("xss")</script>',
-    '<img src=x onerror="alert(\'xss\')">',
+    "<img src=x onerror=\"alert('xss')\">",
     'javascript:alert("xss")',
     '<svg onload=alert("xss")>',
-    '<iframe src="javascript:alert(\'xss\')"></iframe>',
+    "<iframe src=\"javascript:alert('xss')\"></iframe>",
   ],
 
   // Command injection payloads
   COMMAND_INJECTION_PAYLOADS: [
-    '; rm -rf /',
-    '| cat /etc/passwd',
-    '` whoami `',
-    '$(whoami)',
-    '&&dir',
+    "; rm -rf /",
+    "| cat /etc/passwd",
+    "` whoami `",
+    "$(whoami)",
+    "&&dir",
   ],
 
   // Path traversal payloads
   PATH_TRAVERSAL_PAYLOADS: [
-    '../../etc/passwd',
-    '..\\..\\windows\\system32',
-    '/../../api/admin',
-    '%2e%2e%2fadmin',
+    "../../etc/passwd",
+    "..\\..\\windows\\system32",
+    "/../../api/admin",
+    "%2e%2e%2fadmin",
   ],
 
   // Product categories
-  PRODUCT_CATEGORIES: ['phones', 'laptops', 'monitors'],
+  PRODUCT_CATEGORIES: ["phones", "laptops", "monitors"],
 
   // Billing information
   BILLING_INFO: {
-    name: 'Test User',
-    country: 'USA',
-    city: 'Test City',
-    card: '4111111111111111', // Valid test card number
-    month: '12',
-    year: '2026',
+    name: "Test User",
+    country: "USA",
+    city: "Test City",
+    card: "4111111111111111", // Valid test card number
+    month: "12",
+    year: "2026",
   },
 
   // Performance thresholds
   PERFORMANCE_THRESHOLDS: {
-    PRODUCTS_LIST: 2000,      // 2 second SLA
-    SINGLE_PRODUCT: 1500,     // 1.5 second SLA
-    LOGIN: 1000,              // 1 second SLA
-    ADD_TO_CART: 800,         // 800ms SLA
-    PLACE_ORDER: 2500,        // 2.5 second SLA
-    FILTER_PRODUCTS: 1800,    // 1.8 second SLA
+    PRODUCTS_LIST: 2000, // 2 second SLA
+    SINGLE_PRODUCT: 1500, // 1.5 second SLA
+    LOGIN: 1000, // 1 second SLA
+    ADD_TO_CART: 800, // 800ms SLA
+    PLACE_ORDER: 2500, // 2.5 second SLA
+    FILTER_PRODUCTS: 1800, // 1.8 second SLA
   },
 };
 
@@ -101,7 +101,7 @@ export const API_TEST_DATA = {
  */
 export function generateValidUser() {
   return {
-    username: `user_${faker.string.alphanumeric(8)}`,
+    username: `user_${faker.string.alphanumeric(8)}@test.com`,
     password: `Pass${faker.string.alphanumeric(10)}!@`,
     email: faker.internet.email(),
   };
@@ -114,13 +114,13 @@ export function generateInvalidCredentials() {
   const type = Math.floor(Math.random() * 4);
   switch (type) {
     case 0:
-      return { username: '', password: '' };
+      return { username: "", password: "" };
     case 1:
-      return { username: 'user', password: '' };
+      return { username: "user", password: "" };
     case 2:
-      return { username: '', password: 'pass' };
+      return { username: "", password: "pass" };
     default:
-      return { username: 'a', password: '123' };
+      return { username: "a", password: "123" };
   }
 }
 
@@ -145,8 +145,8 @@ export function generateBillingInfo() {
     name: faker.person.fullName(),
     country: faker.location.country(),
     city: faker.location.city(),
-    card: faker.finance.creditCardNumber('####-####-####-####'),
-    month: String(Math.floor(Math.random() * 12) + 1).padStart(2, '0'),
+    card: faker.finance.creditCardNumber("####-####-####-####"),
+    month: String(Math.floor(Math.random() * 12) + 1).padStart(2, "0"),
     year: String(new Date().getFullYear() + Math.floor(Math.random() * 10)),
   };
 }
@@ -166,16 +166,19 @@ export function generateLoadTestData(concurrentRequests: number) {
 /**
  * Assert API response structure
  */
-export function assertApiResponseStructure(response: any, expectSuccess: boolean = true) {
-  expect(response).toHaveProperty('success');
+export function assertApiResponseStructure(
+  response: any,
+  expectSuccess: boolean = true,
+) {
+  expect(response).toHaveProperty("success");
 
   if (expectSuccess) {
     expect(response.success).toBe(true);
-    expect(response).toHaveProperty('data');
+    expect(response).toHaveProperty("data");
   } else {
     expect(response.success).toBe(false);
-    expect(response).toHaveProperty('error');
-    expect(response).toHaveProperty('code');
+    expect(response).toHaveProperty("error");
+    expect(response).toHaveProperty("code");
   }
 }
 
@@ -185,7 +188,7 @@ export function assertApiResponseStructure(response: any, expectSuccess: boolean
 export async function retryApiCall<T>(
   apiCall: () => Promise<T>,
   maxRetries: number = 3,
-  delayMs: number = 1000
+  delayMs: number = 1000,
 ): Promise<T> {
   let lastError: Error | null = null;
 
@@ -195,18 +198,20 @@ export async function retryApiCall<T>(
     } catch (error) {
       lastError = error as Error;
       if (i < maxRetries - 1) {
-        await new Promise(resolve => setTimeout(resolve, delayMs));
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
       }
     }
   }
 
-  throw lastError || new Error('API call failed after retries');
+  throw lastError || new Error("API call failed after retries");
 }
 
 /**
  * Measure API response time
  */
-export async function measureResponseTime(apiCall: () => Promise<any>): Promise<{
+export async function measureResponseTime(
+  apiCall: () => Promise<any>,
+): Promise<{
   response: any;
   duration: number;
 }> {
@@ -222,7 +227,7 @@ export async function measureResponseTime(apiCall: () => Promise<any>): Promise<
  */
 export function generateConcurrentRequests(
   apiCall: () => Promise<any>,
-  count: number
+  count: number,
 ) {
   const requests = [];
   for (let i = 0; i < count; i++) {

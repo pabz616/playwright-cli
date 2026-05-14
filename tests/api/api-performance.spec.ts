@@ -1,20 +1,20 @@
-import { test, expect } from '@playwright/test';
-import { DemoblazeAPI, AuthCredentials } from './api-helper';
-import { faker } from '@faker-js/faker';
+import { test, expect } from "@playwright/test";
+import { DemoblazeAPI, AuthCredentials } from "./api-helper";
+import { faker } from "@faker-js/faker";
 
 // spec: tests/api/demoblaze-api-test-plan.md
 // Performance Tests - Response time and load handling
 
 const PERFORMANCE_THRESHOLDS = {
-  PRODUCTS_LIST: 2000,      // 2 second SLA
-  SINGLE_PRODUCT: 1500,     // 1.5 second SLA
-  LOGIN: 1000,              // 1 second SLA
-  ADD_TO_CART: 800,         // 800ms SLA
-  PLACE_ORDER: 2500,        // 2.5 second SLA
-  FILTER_PRODUCTS: 1800,    // 1.8 second SLA
+  PRODUCTS_LIST: 2000, // 2 second SLA
+  SINGLE_PRODUCT: 1500, // 1.5 second SLA
+  LOGIN: 1000, // 1 second SLA
+  ADD_TO_CART: 800, // 800ms SLA
+  PLACE_ORDER: 2500, // 2.5 second SLA
+  FILTER_PRODUCTS: 1800, // 1.8 second SLA
 };
 
-test.describe('Demoblaze API - Performance Tests', () => {
+test.describe("Demoblaze API - Performance Tests", () => {
   let api: DemoblazeAPI;
   let authToken: string;
   let userId: number;
@@ -25,8 +25,8 @@ test.describe('Demoblaze API - Performance Tests', () => {
 
     // Setup: Register and login
     const credentials: AuthCredentials = {
-      username: `perftest_${faker.string.alphanumeric(8)}`,
-      password: 'PerfTest123!',
+      username: `perftest_${faker.string.alphanumeric(8)}@test.com`,
+      password: "PerfTest123!",
     };
 
     await api.signup(credentials);
@@ -36,7 +36,7 @@ test.describe('Demoblaze API - Performance Tests', () => {
     api.setAuthToken(authToken, userId);
   });
 
-  test('Performance - Get all products within SLA', async () => {
+  test("Performance - Get all products within SLA", async () => {
     // 1. Measure time to get all products
     const startTime = Date.now();
     const response = await api.getProducts();
@@ -52,7 +52,7 @@ test.describe('Demoblaze API - Performance Tests', () => {
     expect(responseTime).toBeLessThan(PERFORMANCE_THRESHOLDS.PRODUCTS_LIST);
   });
 
-  test('Performance - Get single product within SLA', async () => {
+  test("Performance - Get single product within SLA", async () => {
     // 1. Get product list first
     const products = await api.getProducts();
     const productId = products.data[0].id;
@@ -65,18 +65,18 @@ test.describe('Demoblaze API - Performance Tests', () => {
 
     // 3. Verify successful response
     expect(response.success).toBe(true);
-    expect(response.data).toHaveProperty('id', productId);
+    expect(response.data).toHaveProperty("id", productId);
 
     // 4. Verify response time meets SLA
     console.log(`Single product retrieved in ${responseTime}ms`);
     expect(responseTime).toBeLessThan(PERFORMANCE_THRESHOLDS.SINGLE_PRODUCT);
   });
 
-  test('Performance - Login operation within SLA', async () => {
+  test("Performance - Login operation within SLA", async () => {
     // 1. Create new credentials
     const credentials: AuthCredentials = {
-      username: `perfuser_${faker.string.alphanumeric(8)}`,
-      password: 'PerfTest123!',
+      username: `perfuser_${faker.string.alphanumeric(8)}@test.com`,
+      password: "PerfTest123!",
     };
 
     await api.signup(credentials);
@@ -95,7 +95,7 @@ test.describe('Demoblaze API - Performance Tests', () => {
     expect(responseTime).toBeLessThan(PERFORMANCE_THRESHOLDS.LOGIN);
   });
 
-  test('Performance - Add to cart operation within SLA', async () => {
+  test("Performance - Add to cart operation within SLA", async () => {
     // 1. Get a product
     const products = await api.getProducts();
     const productId = products.data[0].id;
@@ -114,10 +114,10 @@ test.describe('Demoblaze API - Performance Tests', () => {
     expect(responseTime).toBeLessThan(PERFORMANCE_THRESHOLDS.ADD_TO_CART);
   });
 
-  test('Performance - Filter products by category within SLA', async () => {
+  test("Performance - Filter products by category within SLA", async () => {
     // 1. Measure time to filter products
     const startTime = Date.now();
-    const response = await api.getProductsByCategory('phones');
+    const response = await api.getProductsByCategory("phones");
     const endTime = Date.now();
     const responseTime = endTime - startTime;
 
@@ -130,7 +130,7 @@ test.describe('Demoblaze API - Performance Tests', () => {
     expect(responseTime).toBeLessThan(PERFORMANCE_THRESHOLDS.FILTER_PRODUCTS);
   });
 
-  test('Performance - Place order operation within SLA', async () => {
+  test("Performance - Place order operation within SLA", async () => {
     // 1. Add products to cart
     const products = await api.getProducts();
     await api.addToCart(products.data[0].id, 1);
@@ -149,7 +149,7 @@ test.describe('Demoblaze API - Performance Tests', () => {
     }
   });
 
-  test('Performance - Bulk product retrieval (multiple concurrent requests)', async () => {
+  test("Performance - Bulk product retrieval (multiple concurrent requests)", async () => {
     // 1. Send 10 concurrent product list requests
     const startTime = Date.now();
     const promises = [];
@@ -162,16 +162,18 @@ test.describe('Demoblaze API - Performance Tests', () => {
     const averageTime = totalTime / 10;
 
     // 2. Verify all responses succeeded
-    responses.forEach(response => {
+    responses.forEach((response) => {
       expect(response.success).toBe(true);
     });
 
     // 3. Verify average response time
-    console.log(`Bulk retrieval: Total ${totalTime}ms, Average ${averageTime}ms per request`);
+    console.log(
+      `Bulk retrieval: Total ${totalTime}ms, Average ${averageTime}ms per request`,
+    );
     expect(averageTime).toBeLessThan(PERFORMANCE_THRESHOLDS.PRODUCTS_LIST);
   });
 
-  test('Performance - Large cart operations (100+ items)', async () => {
+  test("Performance - Large cart operations (100+ items)", async () => {
     // 1. Get products
     const products = await api.getProducts();
 
@@ -191,11 +193,13 @@ test.describe('Demoblaze API - Performance Tests', () => {
     const viewEndTime = Date.now();
     const viewTime = viewEndTime - viewStartTime;
 
-    console.log(`Large cart view completed in ${viewTime}ms for ${cartResponse.data.length} items`);
+    console.log(
+      `Large cart view completed in ${viewTime}ms for ${cartResponse.data.length} items`,
+    );
     expect(viewTime).toBeLessThan(PERFORMANCE_THRESHOLDS.PRODUCTS_LIST);
   });
 
-  test('Performance - Sequential API calls performance', async () => {
+  test("Performance - Sequential API calls performance", async () => {
     // 1. Measure time for sequential operations
     const startTime = Date.now();
 
@@ -217,13 +221,20 @@ test.describe('Demoblaze API - Performance Tests', () => {
     // 2. Calculate average per operation (4 operations)
     const averagePerOperation = totalTime / 4;
 
-    console.log(`Sequential operations total: ${totalTime}ms, Average: ${averagePerOperation}ms per operation`);
+    console.log(
+      `Sequential operations total: ${totalTime}ms, Average: ${averagePerOperation}ms per operation`,
+    );
 
     // Total time should be reasonable (allowing sum of individual SLAs + overhead)
-    expect(totalTime).toBeLessThan(PERFORMANCE_THRESHOLDS.PRODUCTS_LIST + PERFORMANCE_THRESHOLDS.SINGLE_PRODUCT + PERFORMANCE_THRESHOLDS.ADD_TO_CART + PERFORMANCE_THRESHOLDS.PRODUCTS_LIST);
+    expect(totalTime).toBeLessThan(
+      PERFORMANCE_THRESHOLDS.PRODUCTS_LIST +
+        PERFORMANCE_THRESHOLDS.SINGLE_PRODUCT +
+        PERFORMANCE_THRESHOLDS.ADD_TO_CART +
+        PERFORMANCE_THRESHOLDS.PRODUCTS_LIST,
+    );
   });
 
-  test('Performance - Response payload size validation', async () => {
+  test("Performance - Response payload size validation", async () => {
     // 1. Get products and measure payload size
     const response = await api.getProducts();
 
@@ -237,7 +248,7 @@ test.describe('Demoblaze API - Performance Tests', () => {
     expect(sizeInKB).toBeLessThan(5000);
   });
 
-  test('Performance - P95 response time under load (simulated)', async () => {
+  test("Performance - P95 response time under load (simulated)", async () => {
     // 1. Send 20 requests and measure response times
     const responseTimes: number[] = [];
 
@@ -254,9 +265,13 @@ test.describe('Demoblaze API - Performance Tests', () => {
     const p95ResponseTime = responseTimes[p95Index];
 
     console.log(`P95 response time: ${p95ResponseTime}ms`);
-    console.log(`Response times: min=${responseTimes[0]}ms, max=${responseTimes[responseTimes.length - 1]}ms`);
+    console.log(
+      `Response times: min=${responseTimes[0]}ms, max=${responseTimes[responseTimes.length - 1]}ms`,
+    );
 
     // P95 should be within reasonable threshold
-    expect(p95ResponseTime).toBeLessThan(PERFORMANCE_THRESHOLDS.PRODUCTS_LIST * 1.5);
+    expect(p95ResponseTime).toBeLessThan(
+      PERFORMANCE_THRESHOLDS.PRODUCTS_LIST * 1.5,
+    );
   });
 });
