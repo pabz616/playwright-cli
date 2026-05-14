@@ -16,6 +16,7 @@ interface SuccessResponseNoData {
 
 interface ErrorResponse {
   success: false;
+  data: null;
   error: string;
   code: string;
   message?: string;
