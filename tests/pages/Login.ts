@@ -16,7 +16,7 @@ class UserAuthentication {
     this.logInModal = page.locator(locators.LOG_IN_MODAL);
   }
 
-  async signUp() {
+  async submitSignUpForm() {
     await this.signUpLink.click();
     await expect(this.signInModal).toBeVisible();
     await expect(this.page.locator(locators.SIGN_USERNAME)).toBeVisible();

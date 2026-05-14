@@ -61,13 +61,17 @@ export default {
   // USER AUTHENTICATION
   LOG_IN_MODAL: "#logInModal",
   LOG_IN_CLOSE_BUTTON: "#logInModal .close",
-  SIGN_IN_MODAL: "#signInModal",
-  SIGN_IN_CLOSE_BUTTON: "#signInModal .close",
   LOGIN_USERNAME: "#loginusername",
   LOGIN_PASSWORD: "#loginpassword",
+  LOG_IN_BUTTON: 'button:has-text("Log in")',
+
+  // USER IS AUTHENTICATED
+  NAME_OF_USER: "#nameofuser",
+  
+  // USER ACCOUNT CREATION
+  SIGN_IN_MODAL: "#signInModal",
+  SIGN_IN_CLOSE_BUTTON: "#signInModal .close",
   SIGN_USERNAME: '//input[@id="sign-username"]',
   SIGN_PASSWORD: '//input[@id="sign-password"]',
-  LOG_IN_BUTTON: 'button:has-text("Log in")',
   SIGN_UP_BUTTON: "#signInModal button.btn-primary",
-  NAME_OF_USER: "#nameofuser",
 };

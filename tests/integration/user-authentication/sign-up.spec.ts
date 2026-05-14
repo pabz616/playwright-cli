@@ -1,21 +1,21 @@
 import { test } from "@playwright/test";
 import testData from "../../../utils/testData";
-import HomePage_UserAuthentication from "../../pages/UserAuthentication";
+import SignUp from "../../pages/SignUp";
 
-let onHomePageUserAuthentication: HomePage_UserAuthentication;
+let onSignUpForm: SignUp;
 
 test.beforeEach(async ({ page }) => {
   await page.goto(testData.BASE_URL);
   await page.waitForSelector("#signin2");
-  onHomePageUserAuthentication = new HomePage_UserAuthentication(page);
+  onSignUpForm = new SignUp(page);
 });
 
 test.describe("Demoblaze Product Store - User Account Creation", () => {
   test("Sign up validation", async ({ page }) => {
-    await onHomePageUserAuthentication.signUpValidation();
+    await onSignUpForm.verifySignUpValidation();
   });
 
   test("Sign up", async ({ page }) => {
-    await onHomePageUserAuthentication.signUp();
+    await onSignUpForm.completeAndSubmitForm();
   });
 });
