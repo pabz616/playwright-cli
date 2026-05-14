@@ -1,17 +1,17 @@
 import { test, expect } from "@playwright/test";
 import testData from "../../utils/testData";
 import ShoppingCart from "../pages/ShoppingCart";
-import UserAuthentication from "../pages/UserAuthentication";
 import HomePage_ProductBrowsing from "../pages/ProductBrowsing";
+import LoginForm from "../pages/Login";
 
 let onShoppingCart: ShoppingCart;
-let onUserAuthentication: UserAuthentication;
+let onLoginForm: LoginForm;
 let onHomePageProductBrowsing: HomePage_ProductBrowsing;
 
 test.beforeEach(async ({ page }) => {
   await page.goto(testData.BASE_URL);
   onShoppingCart = new ShoppingCart(page);
-  onUserAuthentication = new UserAuthentication(page);
+  onLoginForm = new LoginForm(page);
   onHomePageProductBrowsing = new HomePage_ProductBrowsing(page);
 });
 
@@ -23,7 +23,7 @@ test.describe("Demoblaze Product Store - Checkout Workflow", () => {
   });
 
   test("Logged In Checkout - Place single order", async ({ page }) => {
-    await onUserAuthentication.logIn();
+    await onLoginForm.submitValidLogin(testData.USN, testData.PWD);
     await onShoppingCart.addProductToCart();
     await onShoppingCart.confirmCartUIElements();
     await onShoppingCart.placeOrder();
