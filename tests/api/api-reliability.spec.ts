@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
-import { DemoblazeAPI, AuthCredentials } from './api-helper';
-import { faker } from '@faker-js/faker';
+import { test, expect } from "@playwright/test";
+import { DemoblazeAPI, AuthCredentials } from "./api-helper";
+import { faker } from "@faker-js/faker";
 
 // spec: tests/api/demoblaze-api-test-plan.md
 // Reliability Tests - Network failures, retries, and data consistency
 
-test.describe('Demoblaze API - Reliability Tests', () => {
+test.describe("Demoblaze API - Reliability Tests", () => {
   let api: DemoblazeAPI;
   let authToken: string;
   let userId: number;
@@ -16,8 +16,8 @@ test.describe('Demoblaze API - Reliability Tests', () => {
 
     // Setup: Register and login
     const credentials: AuthCredentials = {
-      username: `reliabilitytest_${faker.string.alphanumeric(8)}`,
-      password: 'ReliabilityTest123!',
+      username: `reliabilitytest_${faker.string.alphanumeric(8)}@test.com`,
+      password: "ReliabilityTest123!",
     };
 
     await api.signup(credentials);
@@ -27,7 +27,7 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     api.setAuthToken(authToken, userId);
   });
 
-  test('Reliability - API availability check (health endpoint)', async () => {
+  test("Reliability - API availability check (health endpoint)", async () => {
     // 1. Multiple calls to verify API is consistently available
     const calls = 5;
     const results = [];
@@ -38,17 +38,17 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     }
 
     // 2. All calls should succeed
-    expect(results.every(r => r === true)).toBe(true);
+    expect(results.every((r) => r === true)).toBe(true);
     console.log(`API availability: ${calls}/${calls} requests successful`);
   });
 
-  test('Reliability - Handle network timeout gracefully', async () => {
+  test("Reliability - Handle network timeout gracefully", async () => {
     // 1. This test assumes the API handles timeouts gracefully
     // Attempting a long-running operation
     try {
       // Create a promise that simulates a timeout scenario
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Request timeout')), 30000)
+        setTimeout(() => reject(new Error("Request timeout")), 30000),
       );
 
       const products = api.getProducts();
@@ -58,11 +58,11 @@ test.describe('Demoblaze API - Reliability Tests', () => {
       expect(result).toBeDefined();
     } catch (error) {
       // Timeout error should be descriptive
-      expect(error.message).toContain('timeout');
+      expect(error.message).toContain("timeout");
     }
   });
 
-  test('Reliability - Data consistency after add to cart', async () => {
+  test("Reliability - Data consistency after add to cart", async () => {
     // 1. Add product to cart
     const products = await api.getProducts();
     const productId = products.data[0].id;
@@ -81,7 +81,7 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     });
   });
 
-  test('Reliability - Cart state persistence', async () => {
+  test("Reliability - Cart state persistence", async () => {
     // 1. Add items to cart
     const products = await api.getProducts();
     const product1 = products.data[0];
@@ -91,15 +91,15 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     await api.addToCart(product2.id, 2);
 
     // 2. Wait a moment
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // 3. Verify cart items are still there
     const cartResponse = await api.viewCart();
     expect(cartResponse.data.length).toBeGreaterThanOrEqual(2);
 
     // 4. Verify quantities are correct
-    const item1 = cartResponse.data.find(i => i.product_id === product1.id);
-    const item2 = cartResponse.data.find(i => i.product_id === product2.id);
+    const item1 = cartResponse.data.find((i) => i.product_id === product1.id);
+    const item2 = cartResponse.data.find((i) => i.product_id === product2.id);
 
     expect(item1).toBeDefined();
     expect(item2).toBeDefined();
@@ -108,11 +108,11 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     }
   });
 
-  test('Reliability - Handle duplicate requests', async () => {
+  test("Reliability - Handle duplicate requests", async () => {
     // 1. Send identical requests rapidly
     const credentials: AuthCredentials = {
-      username: `duptest_${faker.string.alphanumeric(8)}`,
-      password: 'DupTest123!',
+      username: `duptest_${faker.string.alphanumeric(8)}@test.com`,
+      password: "DupTest123!",
     };
 
     // 2. Send multiple identical signup requests
@@ -128,13 +128,13 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     // 3. At least first should succeed, others should fail gracefully
     expect(responses[0].success).toBe(true);
     expect(responses[1].success).toBe(false);
-    expect(responses[1].code).toBe('USER_EXISTS');
+    expect(responses[1].code).toBe("USER_EXISTS");
   });
 
-  test('Reliability - Product data consistency', async () => {
+  test("Reliability - Product data consistency", async () => {
     // 1. Get all products twice
     const products1 = await api.getProducts();
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     const products2 = await api.getProducts();
 
     // 2. Both responses should have same number of products
@@ -148,25 +148,25 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     });
   });
 
-  test('Reliability - Category filter consistency', async () => {
+  test("Reliability - Category filter consistency", async () => {
     // 1. Get phones category multiple times
     const responses = [];
     for (let i = 0; i < 3; i++) {
-      responses.push(await api.getProductsByCategory('phones'));
-      await new Promise(resolve => setTimeout(resolve, 200));
+      responses.push(await api.getProductsByCategory("phones"));
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
 
     // 2. All should return same products
-    const firstProducts = responses[0].data.map(p => p.id).sort();
+    const firstProducts = responses[0].data.map((p) => p.id).sort();
     responses.forEach((response, index) => {
       if (index > 0) {
-        const products = response.data.map(p => p.id).sort();
+        const products = response.data.map((p) => p.id).sort();
         expect(products).toEqual(firstProducts);
       }
     });
   });
 
-  test('Reliability - Error recovery after failed operation', async () => {
+  test("Reliability - Error recovery after failed operation", async () => {
     // 1. Attempt invalid operation
     const invalidResponse = await api.getProductById(999999);
     expect(invalidResponse.success).toBe(false);
@@ -177,7 +177,7 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     expect(validResponse.data.length).toBeGreaterThan(0);
   });
 
-  test('Reliability - Remove and re-add to cart', async () => {
+  test("Reliability - Remove and re-add to cart", async () => {
     // 1. Add product to cart
     const products = await api.getProducts();
     const productId = products.data[0].id;
@@ -185,7 +185,7 @@ test.describe('Demoblaze API - Reliability Tests', () => {
 
     // 2. Get cart and find the item
     let cartResponse = await api.viewCart();
-    const item = cartResponse.data.find(i => i.product_id === productId);
+    const item = cartResponse.data.find((i) => i.product_id === productId);
     expect(item).toBeDefined();
     const itemId = item!.id;
 
@@ -195,7 +195,9 @@ test.describe('Demoblaze API - Reliability Tests', () => {
 
     // 4. Verify removed
     cartResponse = await api.viewCart();
-    const removedItem = cartResponse.data.find(i => i.product_id === productId);
+    const removedItem = cartResponse.data.find(
+      (i) => i.product_id === productId,
+    );
     expect(removedItem).toBeUndefined();
 
     // 5. Re-add should work
@@ -204,18 +206,21 @@ test.describe('Demoblaze API - Reliability Tests', () => {
 
     // 6. Verify it's back
     cartResponse = await api.viewCart();
-    const readdedItem = cartResponse.data.find(i => i.product_id === productId);
+    const readdedItem = cartResponse.data.find(
+      (i) => i.product_id === productId,
+    );
     expect(readdedItem).toBeDefined();
   });
 
-  test('Reliability - Multiple sequential orders', async () => {
+  test("Reliability - Multiple sequential orders", async () => {
     // 1. Create and place multiple orders
     const orderIds = [];
 
     for (let i = 0; i < 2; i++) {
       // Add products
       const products = await api.getProducts();
-      const randomProduct = products.data[Math.floor(Math.random() * products.data.length)];
+      const randomProduct =
+        products.data[Math.floor(Math.random() * products.data.length)];
       await api.addToCart(randomProduct.id, 1);
 
       // Get cart and place order
@@ -224,7 +229,7 @@ test.describe('Demoblaze API - Reliability Tests', () => {
 
       if (orderResponse.success) {
         orderIds.push(orderResponse.data.order_id);
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
       }
     }
 
@@ -236,11 +241,11 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     expect(ordersResponse.data.length).toBeGreaterThanOrEqual(orderIds.length);
   });
 
-  test('Reliability - Concurrent read operations', async () => {
+  test("Reliability - Concurrent read operations", async () => {
     // 1. Execute multiple concurrent read operations
     const promises = [
       api.getProducts(),
-      api.getProductsByCategory('phones'),
+      api.getProductsByCategory("phones"),
       api.viewCart(),
       api.getProfile(),
     ];
@@ -248,12 +253,12 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     const results = await Promise.all(promises);
 
     // 2. All should succeed
-    results.forEach(result => {
+    results.forEach((result) => {
       expect(result.success).toBe(true);
     });
   });
 
-  test('Reliability - Session persistence across operations', async () => {
+  test("Reliability - Session persistence across operations", async () => {
     // 1. Perform multiple operations with same session
     const products = await api.getProducts();
     const product1 = products.data[0];
@@ -276,7 +281,7 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     expect(cart.data.length).toBeGreaterThan(firstCartSize);
   });
 
-  test('Reliability - Handle large responses gracefully', async () => {
+  test("Reliability - Handle large responses gracefully", async () => {
     // 1. Get all products (potentially large response)
     const response = await api.getProducts();
 
@@ -284,10 +289,10 @@ test.describe('Demoblaze API - Reliability Tests', () => {
     expect(Array.isArray(response.data)).toBe(true);
 
     // 2. Verify all items are properly parsed
-    response.data.forEach(product => {
-      expect(typeof product.id).toBe('number');
-      expect(typeof product.title).toBe('string');
-      expect(typeof product.price).toBe('number');
+    response.data.forEach((product) => {
+      expect(typeof product.id).toBe("number");
+      expect(typeof product.title).toBe("string");
+      expect(typeof product.price).toBe("number");
     });
   });
 });

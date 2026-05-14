@@ -3,13 +3,26 @@ import { faker } from "@faker-js/faker";
 
 export const API_BASE_URL = "https://www.demoblaze.com";
 
-export interface APIResponse<T = any> {
-  success: boolean;
-  data?: T;
+interface SuccessResponse<T = any> {
+  success: true;
+  data: T;
   message?: string;
-  error?: string;
-  code?: string;
 }
+
+interface SuccessResponseNoData {
+  success: true;
+  message?: string;
+}
+
+interface ErrorResponse {
+  success: false;
+  error: string;
+  code: string;
+  message?: string;
+}
+
+export type APIResponse<T = any> = SuccessResponse<T> | ErrorResponse;
+export type APIResponseNoData = SuccessResponseNoData | ErrorResponse;
 
 export interface AuthCredentials {
   username: string;
@@ -42,11 +55,49 @@ export interface Order {
   created_at: string;
 }
 
+// Response data types
+export interface LoginData {
+  token: string;
+  user_id: number;
+  username: string;
+}
+
+export interface SignupData {
+  user_id: number;
+  username: string;
+}
+
+export interface CartActionData {
+  cart_id: number;
+  item_id?: number;
+}
+
+export interface ProfileData {
+  user_id: number;
+  username: string;
+  email: string;
+  phone?: string;
+  country?: string;
+  city?: string;
+  created_at: string;
+}
+
+export interface PlaceOrderData extends Order {
+  order_id: number;
+}
+
 // Mock data store for API responses
-const mockUsers: Map<
-  string,
-  { id: number; username: string; password: string; email: string }
-> = new Map();
+interface MockUser {
+  id: number;
+  username: string;
+  password: string;
+  email: string;
+  phone?: string;
+  country?: string;
+  city?: string;
+}
+
+const mockUsers: Map<string, MockUser> = new Map();
 const mockProducts: Product[] = [
   {
     id: 1,
@@ -102,6 +153,8 @@ export class DemoblazeAPI {
   private apiContext: APIRequestContext;
   private authToken?: string;
   private userId?: number;
+  private requestCount = 0;
+  private failedLoginAttempts: Map<string, number> = new Map();
 
   constructor(apiContext: APIRequestContext, baseUrl: string = API_BASE_URL) {
     this.apiContext = apiContext;
@@ -125,7 +178,7 @@ export class DemoblazeAPI {
 
   // ============ Authentication Endpoints ============
 
-  async login(credentials: AuthCredentials): Promise<APIResponse> {
+  async login(credentials: AuthCredentials): Promise<APIResponse<LoginData>> {
     if (!credentials.username || !credentials.password) {
       return {
         success: false,
@@ -134,8 +187,29 @@ export class DemoblazeAPI {
       };
     }
 
-    const user = mockUsers.get(credentials.username);
-    if (!user || user.password !== credentials.password) {
+    const username = credentials.username;
+    const failedAttempts = this.failedLoginAttempts.get(username) ?? 0;
+    if (failedAttempts >= 10) {
+      this.failedLoginAttempts.set(username, failedAttempts + 1);
+      return {
+        success: false,
+        error: "Too many login attempts",
+        code: "RATE_LIMITED",
+      };
+    }
+
+    const user = mockUsers.get(username);
+    if (!user) {
+      this.failedLoginAttempts.set(username, failedAttempts + 1);
+      return {
+        success: false,
+        error: "User not found",
+        code: "USER_NOT_FOUND",
+      };
+    }
+
+    if (user.password !== credentials.password) {
+      this.failedLoginAttempts.set(username, failedAttempts + 1);
       return {
         success: false,
         error: "Invalid credentials",
@@ -145,6 +219,7 @@ export class DemoblazeAPI {
 
     this.authToken = `token_${user.id}_${Date.now()}`;
     this.userId = user.id;
+    this.failedLoginAttempts.delete(username);
 
     return {
       success: true,
@@ -157,12 +232,21 @@ export class DemoblazeAPI {
     };
   }
 
-  async signup(credentials: AuthCredentials): Promise<APIResponse> {
+  async signup(credentials: AuthCredentials): Promise<APIResponse<SignupData>> {
     if (!credentials.username || !credentials.password) {
       return {
         success: false,
         error: "Missing required field",
         code: "MISSING_FIELD",
+      };
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(credentials.username)) {
+      return {
+        success: false,
+        error: "Invalid email format",
+        code: "INVALID_EMAIL",
       };
     }
 
@@ -213,6 +297,15 @@ export class DemoblazeAPI {
   // ============ Product Endpoints ============
 
   async getProducts(): Promise<APIResponse<Product[]>> {
+    this.requestCount += 1;
+    if (this.requestCount > 20) {
+      return {
+        success: false,
+        error: "Rate limit exceeded",
+        code: "RATE_LIMITED",
+      };
+    }
+
     return {
       success: true,
       data: mockProducts,
@@ -238,8 +331,26 @@ export class DemoblazeAPI {
   async getProductsByCategory(
     category: string,
   ): Promise<APIResponse<Product[]>> {
-    const invalidCategories = ["invalidcategory", "<script>", "../", "| cat"];
-    if (invalidCategories.some((inv) => category.includes(inv))) {
+    this.requestCount += 1;
+
+    const suspiciousCategory = /[;|`$&]|<script>|javascript:/i;
+    const lowerCategory = category.toLowerCase().trim();
+    const validCategories = new Set(
+      mockProducts.map((product) => product.category.toLowerCase()),
+    );
+
+    if (this.requestCount > 20) {
+      return {
+        success: false,
+        error: "Rate limit exceeded",
+        code: "RATE_LIMITED",
+      };
+    }
+
+    if (
+      suspiciousCategory.test(category) ||
+      !validCategories.has(lowerCategory)
+    ) {
       return {
         success: false,
         error: "Category not found",
@@ -248,8 +359,16 @@ export class DemoblazeAPI {
     }
 
     const filtered = mockProducts.filter(
-      (p) => p.category.toLowerCase() === category.toLowerCase(),
+      (p) => p.category.toLowerCase() === lowerCategory,
     );
+    if (filtered.length === 0) {
+      return {
+        success: false,
+        error: "Category not found",
+        code: "NOT_FOUND",
+      };
+    }
+
     return {
       success: true,
       data: filtered,
@@ -261,10 +380,18 @@ export class DemoblazeAPI {
   async addToCart(
     productId: number,
     quantity: number = 1,
-  ): Promise<APIResponse> {
+  ): Promise<APIResponse<CartActionData>> {
     if (!this.userId) throw new Error("User not authenticated");
 
-    if (quantity <= 0) {
+    if (quantity < 0) {
+      return {
+        success: false,
+        error: "Invalid quantity",
+        code: "INVALID_QUANTITY",
+      };
+    }
+
+    if (quantity === 0) {
       return {
         success: false,
         error: "Quantity must be greater than 0",
@@ -308,7 +435,7 @@ export class DemoblazeAPI {
     };
   }
 
-  async removeFromCart(itemId: number): Promise<APIResponse> {
+  async removeFromCart(itemId: number): Promise<APIResponseNoData> {
     if (!this.userId) throw new Error("User not authenticated");
 
     const cart = mockCarts.get(this.userId) || [];
@@ -343,7 +470,7 @@ export class DemoblazeAPI {
 
   // ============ Order Endpoints ============
 
-  async placeOrder(items: CartItem[]): Promise<APIResponse<Order>> {
+  async placeOrder(items: CartItem[]): Promise<APIResponse<PlaceOrderData>> {
     if (!this.userId) throw new Error("User not authenticated");
 
     if (!items || items.length === 0) {
@@ -378,7 +505,10 @@ export class DemoblazeAPI {
 
     return {
       success: true,
-      data: order,
+      data: {
+        order_id: order.id,
+        ...order,
+      },
       message: "Order placed successfully",
     };
   }
@@ -415,39 +545,103 @@ export class DemoblazeAPI {
 
   // ============ User Endpoints ============
 
-  async getProfile(): Promise<APIResponse> {
-    if (!this.userId) throw new Error("User not authenticated");
+  async getProfile(): Promise<APIResponse<ProfileData>> {
+    if (!this.userId) {
+      return {
+        success: false,
+        error: "Unauthorized",
+        code: "UNAUTHORIZED",
+      };
+    }
 
-    let username = "";
+    if (!this.authToken || !this.authToken.startsWith("token_")) {
+      return {
+        success: false,
+        error: "Unauthorized",
+        code: "UNAUTHORIZED",
+      };
+    }
+
+    let profile = null;
     for (const [user_name, user] of mockUsers) {
       if (user.id === this.userId) {
-        username = user_name;
+        profile = user;
         break;
       }
+    }
+
+    if (!profile) {
+      return {
+        success: false,
+        error: "User not found",
+        code: "NOT_FOUND",
+      };
     }
 
     return {
       success: true,
       data: {
-        user_id: this.userId,
-        username,
-        email: `${username}@test.com`,
-        phone: faker.phone.number(),
+        user_id: profile.id,
+        username: profile.username,
+        email: profile.email,
+        phone: profile.phone || faker.phone.number(),
         country: "USA",
-        city: faker.location.city(),
+        city: profile.city || faker.location.city(),
         created_at: new Date().toISOString(),
       },
     };
   }
 
-  async updateProfile(profileData: any): Promise<APIResponse> {
+  async updateProfile(profileData: any): Promise<APIResponse<ProfileData>> {
     if (!this.userId) throw new Error("User not authenticated");
+
+    if (profileData.user_id && profileData.user_id !== this.userId) {
+      return {
+        success: false,
+        error: "Unauthorized",
+        code: "UNAUTHORIZED",
+      };
+    }
+
+    let userRecord: MockUser | null = null;
+    for (const [username, user] of mockUsers) {
+      if (user.id === this.userId) {
+        userRecord = user;
+        if (profileData.email) {
+          user.email = profileData.email;
+        }
+        if (profileData.phone) {
+          user.phone = profileData.phone;
+        }
+        if (profileData.country) {
+          user.country = profileData.country;
+        }
+        if (profileData.city) {
+          user.city = profileData.city;
+        }
+        mockUsers.set(username, user);
+        break;
+      }
+    }
+
+    if (!userRecord) {
+      return {
+        success: false,
+        error: "User not found",
+        code: "NOT_FOUND",
+      };
+    }
 
     return {
       success: true,
       data: {
-        user_id: this.userId,
-        ...profileData,
+        user_id: userRecord.id,
+        username: userRecord.username,
+        email: userRecord.email,
+        phone: userRecord.phone,
+        country: userRecord.country,
+        city: userRecord.city,
+        created_at: new Date().toISOString(),
       },
       message: "Profile updated",
     };
