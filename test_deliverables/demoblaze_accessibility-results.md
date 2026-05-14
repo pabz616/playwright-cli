@@ -35,12 +35,26 @@ The test suite checks the following accessibility areas:
 - Root cause: modal input fields do not have explicit `<label>` elements or accessible text via `aria-label` / `aria-labelledby`
 - Example failing element: `#loginusername`
 
+#### Steps to Reproduce the login up modal failure
+
+1. Open `https://www.demoblaze.com/`
+2. Click `Log in`
+3. Wait for the `#logInModal` modal to appear
+4. Verify the modal input fields have labels or accessible names
+
 ### 2. Sign up modal form fields missing labels
 
 - Affected tests: `Sign up modal accessibility`
 - Browsers affected: Chromium, Firefox, WebKit
 - Failure type: critical
 - Root cause: sign-up modal fields are flagged by Axe for missing form labels or accessible names
+
+#### Steps to Reproduce the sign up modal failure
+
+1. Open `https://www.demoblaze.com/`
+2. Click `Sign up`
+3. Wait for the `#signInModal` modal to appear
+4. Verify the modal input fields have labels or accessible names
 
 ### 3. Product details page missing image alt text
 
@@ -50,6 +64,13 @@ The test suite checks the following accessibility areas:
 - Root cause: images loaded on the product details page are missing `alt` attribute values
 - Example failing element: `img width="50" height="50" style="margin-right:10px" src="blazemeter-favicon-512x512.png">`
 
+#### Steps to Reproduce the product details image alt failure
+
+1. Open `https://www.demoblaze.com/`
+2. Click the first product link on the home page
+3. Inspect the product details page image markup and confirm all `img` tags have `alt` attributes
+
+
 ### 4. Keyboard navigation focus issue
 
 - Affected tests: `Keyboard navigation accessibility`
@@ -58,7 +79,16 @@ The test suite checks the following accessibility areas:
 - Root cause: tabbing through the home page does not consistently land on a meaningful interactive element after five tab presses
 - Result: active element tag is not one of the expected interactive types
 
-## Passes
+#### Steps to Reproduce the keyboard navigation failure
+
+1. Open `https://www.demoblaze.com/`
+2. Press `Tab` once
+3. Verify the first focused element is interactive
+4. Press `Tab` five additional times
+5. Confirm the active element is an interactive control such as `A`, `BUTTON`, `INPUT`, `SELECT`, or `TEXTAREA`
+
+
+## Passes ✅ 
 
 The following accessibility checks passed:
 
@@ -78,34 +108,6 @@ The following accessibility checks passed:
 cd /Users/pablovergara/Desktop/automation/playwright-cli
 npx playwright test tests/accessibility/accessibility.spec.ts
 ```
-
-### Reproduce the login modal failure
-
-1. Open `https://www.demoblaze.com/`
-2. Click `Log in`
-3. Wait for the `#logInModal` modal to appear
-4. Verify the modal input fields have labels or accessible names
-
-### Reproduce the sign up modal failure
-
-1. Open `https://www.demoblaze.com/`
-2. Click `Sign up`
-3. Wait for the `#signInModal` modal to appear
-4. Verify the modal input fields have labels or accessible names
-
-### Reproduce the product details image alt failure
-
-1. Open `https://www.demoblaze.com/`
-2. Click the first product link on the home page
-3. Inspect the product details page image markup and confirm all `img` tags have `alt` attributes
-
-### Reproduce the keyboard navigation failure
-
-1. Open `https://www.demoblaze.com/`
-2. Press `Tab` once
-3. Verify the first focused element is interactive
-4. Press `Tab` five additional times
-5. Confirm the active element is an interactive control such as `A`, `BUTTON`, `INPUT`, `SELECT`, or `TEXTAREA`
 
 ## Recommendations
 
