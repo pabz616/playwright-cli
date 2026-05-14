@@ -46,6 +46,16 @@ test.describe("Demoblaze Product Store - User authentication", () => {
       expect(dialog.message()).toBe("Invalid password.");
       await dialog.accept();});
   });
-
-
+  test("XSS Injection", async ({ page }) => {
+    await onLoginForm.submitLogInForm("<script>alert('XSS Test')</script>", "passphrase");
+    page.on("dialog", async (dialog) => {
+      expect(dialog.message()).toBe("User does not exist.");
+      await dialog.accept();});
+  });
+  test("SQL Injection", async ({ page }) => {
+    await onLoginForm.submitLogInForm("' OR '1'='1", "' OR '1'='1");
+    page.on("dialog", async (dialog) => {
+      expect(dialog.message()).toBe("User does not exist.");
+      await dialog.accept();});
+    });
 });
