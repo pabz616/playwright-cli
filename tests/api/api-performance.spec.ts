@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-import { faker } from "@faker-js/faker";
+import testData from "../../utils/testData";
 
 // spec: tests/api/demoblaze-api-test-plan.md
 // Performance Tests - Response time and load handling
@@ -25,7 +25,7 @@ test.describe("Demoblaze API - Performance Tests", () => {
 
     // Setup: Register and login
     const credentials: AuthCredentials = {
-      username: `perftest_${faker.string.alphanumeric(8)}@test.com`,
+      username: `perftest_${testData.ALPHA_NUM_STR}@test.com`,
       password: "PerfTest123!",
     };
 
@@ -75,7 +75,7 @@ test.describe("Demoblaze API - Performance Tests", () => {
   test("Performance - Login operation within SLA", async () => {
     // 1. Create new credentials
     const credentials: AuthCredentials = {
-      username: `perfuser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `perfuser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "PerfTest123!",
     };
 

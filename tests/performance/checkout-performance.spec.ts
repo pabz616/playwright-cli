@@ -1,14 +1,14 @@
 import { test, expect, type Browser, type Page } from "@playwright/test";
-import testData from "../../utils/testData";
+const { testData } = require("../../../utils/testData");
 import locators from "../pageElements/locators";
 
 const orderFormData = {
   name: "Performance Tester",
-  country: "USA",
-  city: "Seattle",
-  card: "4111111111111111",
-  month: "12",
-  year: "2026",
+  country: testData.COUNTRY,
+  city: testData.CITY,
+  card: testData.CARD,
+  month: testData.MONTH,
+  year: testData.YEAR,
 };
 
 async function openStoreAndAddProduct(page: Page) {

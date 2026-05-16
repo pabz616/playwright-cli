@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-import testData from "../..//utils/testData";
+const { testData } = require("../../utils/testData");
 
 // spec: tests/api/demoblaze-api-test-plan.md
 // Security Tests - OWASP API Top 10 2023 Coverage

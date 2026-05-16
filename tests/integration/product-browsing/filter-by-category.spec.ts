@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import testData from "../../../utils/testData";
+const { testData } = require("../../../utils/testData");
 import HomePage_ProductBrowsing from "../../pages/ProductBrowsing";
 
 let onHomePageProductBrowsing: HomePage_ProductBrowsing;
@@ -11,13 +11,12 @@ test.beforeEach(async ({ page }) => {
 
 test.describe("Demoblaze Product Store - Product Filtering", () => {
   test("Filter by Phones", async ({ page }) => {
-    await onHomePageProductBrowsing.filterByCategory("Phones");
+    await onHomePageProductBrowsing.filterByCategory(testData.CATEGORY1);
   });
   test("Filter by Laptops", async ({ page }) => {
-    await onHomePageProductBrowsing.filterByCategory("Laptops");
+    await onHomePageProductBrowsing.filterByCategory(testData.CATEGORY2);
   });
-    test("Filter by Monitors", async ({ page }) => {
-    await onHomePageProductBrowsing.filterByCategory("Monitors");
+  test("Filter by Monitors", async ({ page }) => {
+    await onHomePageProductBrowsing.filterByCategory(testData.CATEGORY3);
   });
-
 });

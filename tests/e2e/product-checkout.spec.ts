@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import testData from "../../utils/testData";
+const { testData } = require("../../utils/testData");
 import ShoppingCart from "../pages/ShoppingCart";
 import HomePage_ProductBrowsing from "../pages/ProductBrowsing";
 import LoginForm from "../pages/Login";
@@ -29,7 +29,9 @@ test.describe("Demoblaze Product Store - Checkout Workflow", () => {
     await onShoppingCart.placeOrder();
   });
 
-  test("Random Product Checkout - Add a randomly selected product", async ({page}) => {
+  test("Random Product Checkout - Add a randomly selected product", async ({
+    page,
+  }) => {
     const randomProduct = await onShoppingCart.addRandomProductToCart();
     await onShoppingCart.viewCart();
     await onShoppingCart.confirmItemsInCart();
@@ -41,8 +43,8 @@ test.describe("Demoblaze Product Store - Checkout Workflow", () => {
 
   test("Checkout with all identical products", async ({ page }) => {
     const productName = await onShoppingCart.addSameProductMultipleTimes(0, 3);
-    const productsAdded = page.locator("#tbodyid tr")
-    
+    const productsAdded = page.locator("#tbodyid tr");
+
     await onShoppingCart.viewCart();
     expect(productName).toBeTruthy();
     await expect(productsAdded).toHaveCount(3);
@@ -50,8 +52,10 @@ test.describe("Demoblaze Product Store - Checkout Workflow", () => {
     await onShoppingCart.placeOrder();
   });
 
-  test("Checkout with one phone, one laptop, and one monitor", async ({page}) => {
-    const productsAdded = page.locator("#tbodyid tr")
+  test("Checkout with one phone, one laptop, and one monitor", async ({
+    page,
+  }) => {
+    const productsAdded = page.locator("#tbodyid tr");
 
     await onShoppingCart.addProductToCartByIndex(0);
     await onShoppingCart.returnHome();
@@ -64,7 +68,7 @@ test.describe("Demoblaze Product Store - Checkout Workflow", () => {
     await onShoppingCart.addProductToCartByIndex(0);
 
     await onShoppingCart.viewCart();
-    await expect(productsAdded ).toHaveCount(3);
+    await expect(productsAdded).toHaveCount(3);
     await onShoppingCart.confirmCartUIElements();
     await onShoppingCart.placeOrder();
   });

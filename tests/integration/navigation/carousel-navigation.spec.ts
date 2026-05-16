@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import testData from "../../../utils/testData";
+const { testData } = require("../../../utils/testData");
 import Carousel from "../../pages/Carousel";
 
 let onHomePageCarousel: Carousel;
@@ -16,5 +16,4 @@ test.describe("Demoblaze Product Store Carousel", () => {
   test("Carousel Navigation", async ({ page }) => {
     await onHomePageCarousel.verifyCarouselUI();
   });
-
 });

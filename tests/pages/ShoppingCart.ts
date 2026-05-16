@@ -1,6 +1,6 @@
 import { type Page, type Locator, expect } from "@playwright/test";
 import locators from "../pageElements/locators";
-import testData from "../../utils/testData";
+const { testData } = require("../../../utils/testData");
 
 class ShoppingCart {
   private page: Page;
@@ -113,7 +113,7 @@ class ShoppingCart {
 
   async confirmItemsInCart(expectedCount = 1) {
     await expect(this.page.locator("#tbodyid tr")).toHaveCount(1);
-}
+  }
 
   async getCartRowCount() {
     await this.cartLink.click();
@@ -159,7 +159,9 @@ class ShoppingCart {
   }
 
   async verifyOrderConfirmation() {
-    await expect(this.page.locator(".sweet-alert h2")).toHaveText(testData.ORDER_MSG,);
+    await expect(this.page.locator(".sweet-alert h2")).toHaveText(
+      testData.ORDER_MSG,
+    );
   }
 }
 

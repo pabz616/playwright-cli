@@ -1,8 +1,9 @@
 import { type Page, type Locator, expect } from "@playwright/test";
 import locators from "../pageElements/locators";
+const { testData } = require("../../../utils/testData");
 
-const username = `demo_user_${Date.now()}`;
-const password = "Password123!";
+const username = testData.USN;
+const password = testData.PWD;
 
 class SignUp {
   private page: Page;
@@ -44,12 +45,12 @@ class SignUp {
     // VALIDATE FORM FIELDS
     await expect(this.page.locator(locators.SIGN_USERNAME)).toBeVisible();
     await expect(this.page.locator(locators.SIGN_USERNAME)).toBeEditable();
-    await expect(this.page.locator(locators.SIGN_USERNAME)).toBeEmpty();  
+    await expect(this.page.locator(locators.SIGN_USERNAME)).toBeEmpty();
     //
     await expect(this.page.locator(locators.SIGN_PASSWORD)).toBeVisible();
     await expect(this.page.locator(locators.SIGN_PASSWORD)).toBeEditable();
-    await expect(this.page.locator(locators.SIGN_PASSWORD)).toBeEmpty();  
-  } 
+    await expect(this.page.locator(locators.SIGN_PASSWORD)).toBeEmpty();
+  }
 }
 
 export default SignUp;

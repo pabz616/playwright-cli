@@ -39,7 +39,7 @@ test.describe("Demoblaze Product Store - Accessibility Tests", () => {
 
   test.skip("Login modal accessibility", async ({ page }) => {
     const loginLink = page.getByRole("link", { name: "Log in" });
-    
+
     await loginLink.click();
     await page.waitForSelector("#logInModal", { state: "visible" });
 
@@ -58,7 +58,6 @@ test.describe("Demoblaze Product Store - Accessibility Tests", () => {
 
   test.skip("Sign up modal accessibility", async ({ page }) => {
     const signUpLink = page.getByRole("link", { name: "Sign up" });
-
 
     await signUpLink.click();
     await page.waitForSelector("#signInModal", { state: "visible" });

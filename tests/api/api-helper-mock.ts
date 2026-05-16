@@ -1,7 +1,7 @@
 import { Page, APIRequestContext } from "@playwright/test";
-import { faker } from "@faker-js/faker";
+const { testData } = require("../../utils/testData");
 
-export const API_BASE_URL = "https://www.demoblaze.com";
+export const API_BASE_URL = testData.BASE_URL;
 
 interface SuccessResponse<T = any> {
   success: true;
@@ -585,9 +585,9 @@ export class DemoblazeAPI {
         user_id: profile.id,
         username: profile.username,
         email: profile.email,
-        phone: profile.phone || faker.phone.number(),
-        country: "USA",
-        city: profile.city || faker.location.city(),
+        phone: profile.phone || testData.PHONE,
+        country: testData.COUNTRY,
+        city: profile.city || testData.CITY,
         created_at: new Date().toISOString(),
       },
     };

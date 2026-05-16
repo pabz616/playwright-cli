@@ -2,15 +2,14 @@
  * API Test Data and Utilities
  * Provides test data generators and helper utilities for Demoblaze API testing
  */
-
-import { faker } from "@faker-js/faker";
+const { testData } = require("../../utils/testData");
 
 export const API_TEST_DATA = {
   // Valid test credentials
   VALID_USER: {
-    username: `testuser_${faker.string.alphanumeric(8)}@test.com`,
-    password: "TestPassword123!@",
-    email: faker.internet.email(),
+    username: testData.USN,
+    password: testData.PWD,
+    email: testData.EMAIL,
   },
 
   // Invalid credentials for negative testing
@@ -101,9 +100,9 @@ export const API_TEST_DATA = {
  */
 export function generateValidUser() {
   return {
-    username: `user_${faker.string.alphanumeric(8)}@test.com`,
-    password: `Pass${faker.string.alphanumeric(10)}!@`,
-    email: faker.internet.email(),
+    username: `user_${testData.ALPHA_NUM_STR}@test.com`,
+    password: `Pass${testData.ALPHA_NUM_STR}!@`,
+    email: testData.EMAIL,
   };
 }
 

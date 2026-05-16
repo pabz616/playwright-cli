@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-import { faker } from "@faker-js/faker";
+const { testData } = require("../../utils/testData");
 
 // spec: tests/api/demoblaze-api-test-plan.md
 // Negative Scenario Tests - Error handling and validation
@@ -13,7 +13,7 @@ test.describe("Demoblaze API - Negative Scenarios", () => {
     api = new DemoblazeAPI(context);
 
     const userCredentials: AuthCredentials = {
-      username: `negative_user_${faker.string.alphanumeric(8)}@test.com`,
+      username: `negative_user_${testData.ALPHA_NUM_STR}@test.com`,
       password: "TestPassword123!",
     };
 
@@ -25,7 +25,7 @@ test.describe("Demoblaze API - Negative Scenarios", () => {
   test("Authentication - Login with invalid credentials", async () => {
     // 1. Create a valid user, then attempt login with wrong password
     const validCredentials: AuthCredentials = {
-      username: `validuser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `validuser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "TestPassword123!",
     };
     await api.signup(validCredentials);
@@ -58,7 +58,7 @@ test.describe("Demoblaze API - Negative Scenarios", () => {
   test("Authentication - Register with duplicate username", async () => {
     // 1. Create first user
     const credentials: AuthCredentials = {
-      username: `duplicate_user_${faker.string.alphanumeric(8)}@test.com`,
+      username: `duplicate_user_${testData.ALPHA_NUM_STR}@test.com`,
       password: "TestPassword123!",
     };
 
@@ -89,7 +89,7 @@ test.describe("Demoblaze API - Negative Scenarios", () => {
   test("Authentication - Signup with weak password", async () => {
     // 1. Attempt signup with weak password
     const weakPassword: AuthCredentials = {
-      username: `user_${faker.string.alphanumeric(8)}@test.com`,
+      username: `user_${testData.ALPHA_NUM_STR}@test.com`,
       password: "123", // Too short and weak
     };
 

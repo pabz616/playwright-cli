@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import testData from "../../../utils/testData";
+const { testData } = require("../../../utils/testData");
 import ShoppingCart from "../../pages/ShoppingCart";
 
 let onShoppingCart: ShoppingCart;
@@ -10,7 +10,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Demoblaze Product Store - Shopping Cart Checkout", () => {
-  test("Confirm cart order form fields and complete purchase", async ({ page }) => {
+  test("Confirm cart order form fields and complete purchase", async ({
+    page,
+  }) => {
     await onShoppingCart.addProductToCart();
     await onShoppingCart.viewCart();
     await onShoppingCart.confirmCartUIElements();

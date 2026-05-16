@@ -1,4 +1,4 @@
-import testData from '../utils/testData';
+import testData from '../../utils/testData';
 
 describe('Demoblaze test data config', () => {
   test('exports the expected base URL and credentials', () => {

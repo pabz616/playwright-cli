@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-import testData from "../../utils/testData";
-
+const { testData } = require("../../utils/testData");
+// import testData from "../../utils/testData";
 
 // Chaos Tests - Simulating real-world chaotic scenarios including race conditions,
 // resource exhaustion, cascading failures, and state corruption
@@ -176,7 +176,7 @@ test.describe("Demoblaze API - Chaos Tests", () => {
   test("Chaos - Cascading order failures", async () => {
     // 1. Create user
     const credentials: AuthCredentials = {
-      username: `cascade_user_${faker.string.alphanumeric(8)}@test.com`,
+      username: `cascade_user_${testData.ALPHA_NUM_STR}@test.com`,
       password: "CascadeTest123!",
     };
     await api.signup(credentials);
@@ -201,7 +201,7 @@ test.describe("Demoblaze API - Chaos Tests", () => {
   test.skip("Chaos - Mixed valid and invalid requests in sequence", async () => {
     // 1. Setup user
     const credentials: AuthCredentials = {
-      username: `mixed_user_${faker.string.alphanumeric(8)}@test.com`,
+      username: `mixed_user_${testData.ALPHA_NUM_STR}@test.com`,
       password: "MixedTest123!",
     };
     await api.signup(credentials);
@@ -235,11 +235,11 @@ test.describe("Demoblaze API - Chaos Tests", () => {
   test("Chaos - Cross-user authorization boundary testing", async () => {
     // 1. Create two separate users
     const user1: AuthCredentials = {
-      username: `auth_user1_${faker.string.alphanumeric(8)}@test.com`,
+      username: `auth_user1_${testData.ALPHA_NUM_STR}@test.com`,
       password: "AuthTest123!",
     };
     const user2: AuthCredentials = {
-      username: `auth_user2_${faker.string.alphanumeric(8)}@test.com`,
+      username: `auth_user2_${testData.ALPHA_NUM_STR}@test.com`,
       password: "AuthTest123!",
     };
 
@@ -292,7 +292,7 @@ test.describe("Demoblaze API - Chaos Tests", () => {
   test("Chaos - Cart quantity consistency after concurrent operations", async () => {
     // 1. Setup authenticated user
     const credentials: AuthCredentials = {
-      username: `consistency_user_${faker.string.alphanumeric(8)}@test.com`,
+      username: `consistency_user_${testData.ALPHA_NUM_STR}@test.com`,
       password: "ConsistencyTest123!",
     };
     await api.signup(credentials);
@@ -321,7 +321,7 @@ test.describe("Demoblaze API - Chaos Tests", () => {
   test("Chaos - Order data integrity under concurrent order placement", async () => {
     // 1. Setup user with cart
     const credentials: AuthCredentials = {
-      username: `order_integrity_${faker.string.alphanumeric(8)}@test.com`,
+      username: `order_integrity_${testData.ALPHA_NUM_STR}@test.com`,
       password: "OrderTest123!",
     };
     await api.signup(credentials);
@@ -407,7 +407,7 @@ test.describe("Demoblaze API - Chaos Tests", () => {
   test("Chaos - Order retrieval before placing order", async () => {
     // 1. Setup: Fresh user without orders
     const credentials: AuthCredentials = {
-      username: `ooo_user_${faker.string.alphanumeric(8)}@test.com`,
+      username: `ooo_user_${testData.ALPHA_NUM_STR}@test.com`,
       password: "OOOTest123!",
     };
     await api.signup(credentials);
@@ -427,7 +427,7 @@ test.describe("Demoblaze API - Chaos Tests", () => {
   test("Chaos - Checkout before adding items", async () => {
     // 1. Setup: Fresh user
     const credentials: AuthCredentials = {
-      username: `checkout_early_${faker.string.alphanumeric(8)}@test.com`,
+      username: `checkout_early_${testData.ALPHA_NUM_STR}@test.com`,
       password: "CheckoutTest123!",
     };
     await api.signup(credentials);
@@ -487,7 +487,7 @@ test.describe("Demoblaze API - Chaos Tests", () => {
   test.skip("Chaos - Null and undefined handling", async () => {
     // 1. Setup authenticated user
     const credentials: AuthCredentials = {
-      username: `null_user_${faker.string.alphanumeric(8)}@test.com`,
+      username: `null_user_${testData.ALPHA_NUM_STR}@test.com`,
       password: "NullTest123!",
     };
     await api.signup(credentials);
@@ -516,7 +516,7 @@ test.describe("Demoblaze API - Chaos Tests", () => {
   test.skip("Chaos - Complete chaotic user journey", async () => {
     // 1. Create user
     const credentials: AuthCredentials = {
-      username: `chaos_journey_${faker.string.alphanumeric(8)}@test.com`,
+      username: `chaos_journey_${testData.ALPHA_NUM_STR}@test.com`,
       password: "JourneyTest123!",
     };
     await api.signup(credentials);

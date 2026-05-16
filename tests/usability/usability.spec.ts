@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import testData from "../../utils/testData";
+const { testData } = require("../../utils/testData");
 import locators from "../pageElements/locators";
 
 test.describe("Demoblaze Product Store - Usability", () => {

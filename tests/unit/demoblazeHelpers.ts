@@ -1,4 +1,4 @@
-import locators from '../tests/pageElements/locators';
+import locators from "./locators.spec";
 
 export type DemoblazeCategory = 'Phones' | 'Laptops' | 'Monitors';
 

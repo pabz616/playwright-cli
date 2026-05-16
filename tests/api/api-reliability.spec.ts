@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-import { faker } from "@faker-js/faker";
+const { testData } = require("../../utils/testData");
 
 // spec: tests/api/demoblaze-api-test-plan.md
 // Reliability Tests - Network failures, retries, and data consistency
@@ -16,7 +16,7 @@ test.describe("Demoblaze API - Reliability Tests", () => {
 
     // Setup: Register and login
     const credentials: AuthCredentials = {
-      username: `reliabilitytest_${faker.string.alphanumeric(8)}@test.com`,
+      username: `reliabilitytest_${testData.ALPHA_NUM_STR}@test.com`,
       password: "ReliabilityTest123!",
     };
 
@@ -111,7 +111,7 @@ test.describe("Demoblaze API - Reliability Tests", () => {
   test("Reliability - Handle duplicate requests", async () => {
     // 1. Send identical requests rapidly
     const credentials: AuthCredentials = {
-      username: `duptest_${faker.string.alphanumeric(8)}@test.com`,
+      username: `duptest_${testData.ALPHA_NUM_STR}@test.com`,
       password: "DupTest123!",
     };
 

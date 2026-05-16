@@ -1,4 +1,4 @@
-import locators from '../tests/pageElements/locators';
+import locators from '../pageElements/locators';
 
 describe('Demoblaze locator definitions', () => {
   test('defines navigation selectors for the main site links', () => {

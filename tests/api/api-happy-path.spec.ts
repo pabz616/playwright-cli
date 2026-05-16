@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-import { faker } from "@faker-js/faker";
+const { testData } = require("../../utils/testData");
 
 // spec: tests/api/demoblaze-api-test-plan.md
 // Happy Path Tests - Successful API operations
@@ -13,7 +13,7 @@ test.describe.serial("Demoblaze API - Happy Path Scenarios", () => {
     const context = await playwright.request.newContext();
     api = new DemoblazeAPI(context);
     testUser = {
-      username: `testuser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `testuser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "TestPassword123!",
     };
   });
