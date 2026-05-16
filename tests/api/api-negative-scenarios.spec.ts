@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-const { testData } = require("../../utils/testData");
+import testData from "../../utils/testData";
 
 // spec: tests/api/demoblaze-api-test-plan.md
 // Negative Scenario Tests - Error handling and validation

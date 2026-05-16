@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-const { testData } = require("../../../utils/testData");
+import testData from "../../../utils/testData";
 import LoginForm from "../../pages/Login";
 
 let onLoginForm: LoginForm;

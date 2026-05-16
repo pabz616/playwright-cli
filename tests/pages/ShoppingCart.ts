@@ -1,7 +1,6 @@
 import { type Page, type Locator, expect } from "@playwright/test";
 import locators from "../pageElements/locators";
-const { testData } = require("../../../utils/testData");
-
+import testData from "../../utils/testData";
 class ShoppingCart {
   private page: Page;
   private firstProductTitle: Locator;

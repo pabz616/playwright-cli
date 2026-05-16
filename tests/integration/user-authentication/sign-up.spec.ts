@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-const { testData } = require("../../../utils/testData");
+import testData from "../../../utils/testData";
 import SignUp from "../../pages/SignUp";
 
 let onSignUpForm: SignUp;

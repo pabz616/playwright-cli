@@ -1,8 +1,5 @@
 import { Page, APIRequestContext } from "@playwright/test";
-const { testData } = require("../../utils/testData");
-
-export const API_BASE_URL = testData.BASE_URL;
-
+import testData from "../../utils/testData";
 interface SuccessResponse<T = any> {
   success: true;
   data: T;
@@ -157,7 +154,7 @@ export class DemoblazeAPI {
   private requestCount = 0;
   private failedLoginAttempts: Map<string, number> = new Map();
 
-  constructor(apiContext: APIRequestContext, baseUrl: string = API_BASE_URL) {
+  constructor(apiContext: APIRequestContext, baseUrl: string = testData.BASE_URL) {
     this.apiContext = apiContext;
     this.baseUrl = baseUrl;
   }

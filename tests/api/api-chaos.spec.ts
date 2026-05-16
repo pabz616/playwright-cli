@@ -1,7 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-const { testData } = require("../../utils/testData");
-// import testData from "../../utils/testData";
+import testData from "../../utils/testData";
 
 // Chaos Tests - Simulating real-world chaotic scenarios including race conditions,
 // resource exhaustion, cascading failures, and state corruption

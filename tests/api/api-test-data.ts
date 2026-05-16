@@ -2,7 +2,7 @@
  * API Test Data and Utilities
  * Provides test data generators and helper utilities for Demoblaze API testing
  */
-const { testData } = require("../../utils/testData");
+import testData from "../../utils/testData";
 
 export const API_TEST_DATA = {
   // Valid test credentials
