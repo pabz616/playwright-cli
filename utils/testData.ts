@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker';
 
+const alphaNumericString = faker.string.alphanumeric(8)
+
 export default{
     BASE_URL: "https://www.demoblaze.com/",
     NAME: "Demo Tester: "+faker.string.alphanumeric(3),
@@ -11,6 +13,7 @@ export default{
     ORDER_MSG: "Thank you for your purchase!",
     USN: "test",
     PWD: "test",
-    CHAOS_USER: `chaos_user_${faker.string.alphanumeric(8)}@test.com`,
-    CHAOS_PWD:  "ChaosTest123!"
+    CHAOS_USER: `chaos_user_${alphaNumericString}@test.com`,
+    CHAOS_PWD:  "ChaosTest123!",
+    ALPHA_NUM_STR: alphaNumericString
 }

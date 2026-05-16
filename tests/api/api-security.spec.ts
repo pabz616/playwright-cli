@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-import { faker } from "@faker-js/faker";
+import testData from "../..//utils/testData";
 
 // spec: tests/api/demoblaze-api-test-plan.md
 // Security Tests - OWASP API Top 10 2023 Coverage
@@ -19,7 +19,7 @@ test.describe("Demoblaze API - Security Tests", () => {
 
     // Setup: Create valid user
     validUser = {
-      username: `securitytest_${faker.string.alphanumeric(8)}@test.com`,
+      username: `securitytest_${testData.ALPHA_NUM_STR}@test.com`,
       password: "SecurityTest123!@",
     };
 
@@ -65,7 +65,7 @@ test.describe("Demoblaze API - Security Tests", () => {
 
     for (const payload of maliciousPayloads) {
       const response = await api.login({
-        username: "testuser",
+        username: testData.USN,
         password: payload,
       });
 
@@ -135,7 +135,7 @@ test.describe("Demoblaze API - Security Tests", () => {
       try {
         const response = await api.login({
           username: JSON.stringify(payload),
-          password: "test",
+          password: testData.PWD,
         });
 
         expect(response.success).toBe(false);
@@ -149,7 +149,7 @@ test.describe("Demoblaze API - Security Tests", () => {
     const ldapPayloads = ["*", "*)(uid=*", "admin*", "*)(|(uid=*"];
 
     for (const payload of ldapPayloads) {
-      const response = await api.login({ username: payload, password: "test" });
+      const response = await api.login({ username: payload, password: testData.PWD });
 
       expect(response.success).toBe(false);
       expect(response.error).not.toMatch(/LDAP|Directory/i);
@@ -214,8 +214,8 @@ test.describe("Demoblaze API - Security Tests", () => {
     // OWASP: API2:2023 - Broken Authentication
     // Create and login a user
     const tempUser: AuthCredentials = {
-      username: `tokentest_${faker.string.alphanumeric(8)}@test.com`,
-      password: "TokenTest123!@",
+      username: `tokentest_${testData.ALPHA_NUM_STR}@test.com`,
+      password: testData.PWD,
     };
 
     await api.signup(tempUser);
@@ -267,12 +267,12 @@ test.describe("Demoblaze API - Security Tests", () => {
     // OWASP: API1:2023 - Broken Object Level Authorization
     // User1 should not be able to access User2's orders
     const user1: AuthCredentials = {
-      username: `bolauser1_${faker.string.alphanumeric(8)}@test.com`,
+      username: `bolauser1_${testData.ALPHA_NUM_STR}@test.com`,
       password: "BolaTest123!@",
     };
 
     const user2: AuthCredentials = {
-      username: `bolauser2_${faker.string.alphanumeric(8)}@test.com`,
+      username: `bolauser2_${testData.ALPHA_NUM_STR}@test.com`,
       password: "BolaTest123!@",
     };
 
@@ -313,12 +313,12 @@ test.describe("Demoblaze API - Security Tests", () => {
     // OWASP: API1:2023 - Broken Object Level Authorization
     // Users should not be able to view or modify other users' carts
     const cartUser1: AuthCredentials = {
-      username: `cartuser1_${faker.string.alphanumeric(8)}@test.com`,
+      username: `cartuser1_${testData.ALPHA_NUM_STR}@test.com`,
       password: "CartTest123!@",
     };
 
     const cartUser2: AuthCredentials = {
-      username: `cartuser2_${faker.string.alphanumeric(8)}@test.com`,
+      username: `cartuser2_${testData.ALPHA_NUM_STR}@test.com`,
       password: "CartTest123!@",
     };
 
@@ -346,7 +346,7 @@ test.describe("Demoblaze API - Security Tests", () => {
     // OWASP: API3:2023 - Broken Object Property Level Authorization
     // Users should not be able to modify sensitive fields of their profile
     const profileUser: AuthCredentials = {
-      username: `profiuser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `profiuser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "ProfileTest123!@",
     };
 
@@ -370,7 +370,7 @@ test.describe("Demoblaze API - Security Tests", () => {
     // OWASP: API5:2023 - Broken Function Level Authorization
     // Non-admin users should not be able to perform admin functions
     const esclationUser: AuthCredentials = {
-      username: `escaluser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `escaluser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "EscalTest123!@",
     };
 
@@ -382,7 +382,7 @@ test.describe("Demoblaze API - Security Tests", () => {
 
     // Attempt to modify another user
     const anotherUser: AuthCredentials = {
-      username: `anotheruser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `anotheruser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "AnotherTest123!@",
     };
 
@@ -409,7 +409,7 @@ test.describe("Demoblaze API - Security Tests", () => {
     // OWASP: API4:2023 - Unrestricted Resource Consumption
     // Should prevent adding excessive quantities to cart
     const resourceUser: AuthCredentials = {
-      username: `resourceuser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `resourceuser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "ResourceTest123!@",
     };
 
@@ -438,7 +438,7 @@ test.describe("Demoblaze API - Security Tests", () => {
   test("Security - Negative quantity prevention", async () => {
     // OWASP: API4:2023 - Unrestricted Resource Consumption
     const negQtyUser: AuthCredentials = {
-      username: `negqtyuser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `negqtyuser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "NegQtyTest123!@",
     };
 
@@ -459,7 +459,7 @@ test.describe("Demoblaze API - Security Tests", () => {
   test("Security - Zero quantity prevention", async () => {
     // OWASP: API4:2023 - Unrestricted Resource Consumption
     const zeroQtyUser: AuthCredentials = {
-      username: `zeroqtyuser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `zeroqtyuser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "ZeroQtyTest123!@",
     };
 
@@ -481,7 +481,7 @@ test.describe("Demoblaze API - Security Tests", () => {
     // OWASP: API9:2023 - Improper Inventory Management
     // Users should not be able to add products that don't exist
     const inventoryUser: AuthCredentials = {
-      username: `invuser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `invuser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "InvTest123!@",
     };
 
@@ -506,12 +506,12 @@ test.describe("Demoblaze API - Security Tests", () => {
     // OWASP: API6:2023 - Unrestricted Access to Sensitive Business Flows
     // Users should not be able to view or modify other users' orders
     const orderFlow1: AuthCredentials = {
-      username: `orderflow1_${faker.string.alphanumeric(8)}@test.com`,
+      username: `orderflow1_${testData.ALPHA_NUM_STR}@test.com`,
       password: "OrderFlow123!@",
     };
 
     const orderFlow2: AuthCredentials = {
-      username: `orderflow2_${faker.string.alphanumeric(8)}@test.com`,
+      username: `orderflow2_${testData.ALPHA_NUM_STR}@test.com`,
       password: "OrderFlow123!@",
     };
 
@@ -545,12 +545,12 @@ test.describe("Demoblaze API - Security Tests", () => {
     // OWASP: API6:2023 - Unrestricted Access to Sensitive Business Flows
     // Each user should only see their own order history
     const historyUser1: AuthCredentials = {
-      username: `histuser1_${faker.string.alphanumeric(8)}@test.com`,
+      username: `histuser1_${testData.ALPHA_NUM_STR}@test.com`,
       password: "HistTest123!@",
     };
 
     const historyUser2: AuthCredentials = {
-      username: `histuser2_${faker.string.alphanumeric(8)}@test.com`,
+      username: `histuser2_${testData.ALPHA_NUM_STR}@test.com`,
       password: "HistTest123!@",
     };
 
@@ -597,7 +597,7 @@ test.describe("Demoblaze API - Security Tests", () => {
   test("Security - Verify password hashing in transit", async () => {
     // OWASP: API8:2023 - Security Misconfiguration
     const testCredentials: AuthCredentials = {
-      username: `hashtest_${faker.string.alphanumeric(8)}@test.com`,
+      username: `hashtest_${testData.ALPHA_NUM_STR}@test.com`,
       password: "PasswordToHash123!@",
     };
 
@@ -630,7 +630,7 @@ test.describe("Demoblaze API - Security Tests", () => {
   test("Security - CSRF protection in state-changing operations", async () => {
     // OWASP: API8:2023 - Security Misconfiguration
     const csrfUser: AuthCredentials = {
-      username: `csrfuser_${faker.string.alphanumeric(8)}@test.com`,
+      username: `csrfuser_${testData.ALPHA_NUM_STR}@test.com`,
       password: "CSRFTest123!@",
     };
 
@@ -652,12 +652,12 @@ test.describe("Demoblaze API - Security Tests", () => {
   test("Security - Privilege escalation attempt (unauthorized user modification)", async () => {
     // 1. Create two different users
     const user1: AuthCredentials = {
-      username: `user1_${faker.string.alphanumeric(8)}@test.com`,
+      username: `user1_${testData.ALPHA_NUM_STR}@test.com`,
       password: "User1Pass123!@",
     };
 
     const user2: AuthCredentials = {
-      username: `user2_${faker.string.alphanumeric(8)}@test.com`,
+      username: `user2_${testData.ALPHA_NUM_STR}@test.com`,
       password: "User2Pass123!@",
     };
 
