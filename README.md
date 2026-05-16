@@ -26,6 +26,7 @@ The CLI returns compact references for each element on the page. The element get
 * Accessibility Tools: `https://accessibility.psu.edu/testing/testingtools/`
 * Reliability Testing: `https://learn.microsoft.com/en-us/azure/well-architected/reliability/checklist`
 * Chaos Testing: `https://dzone.com/articles/ultimate-chaos-testing-guide` || Testing w. Litmus MCP `https://litmuschaos.io/`
+* Unit Tests (JEST): `npm install --save-dev jest` followed by jest playwright preset: `npm install --save-dev jest-playwright-preset` .. then add the jest config file (src. https://carlrippon.com/getting-started-with-playwright/). In case of a missing ts-node error: `npm install --save-dev ts-node` when all is rightly installed, and configuration is verified run the unit tests
 
 ## PROMPTS
 
@@ -43,14 +44,15 @@ The CLI returns compact references for each element on the page. The element get
    4. The structure of the framework should look something like:
       1. `./tests`
          1. `/e2e/*`
-         2. `/api/*`
-         3. `/accessibility/*`
+         2. `/api/*` - mock data is ideal for expedience
+         3. `/accessibility/*` - ensure WCAG 2.2 compliance; discuss with PM / PO / Devs
          4. `/integration/*`
          5. `/usability/*`
          6. `/reliability/*`
-         7. `/performance/*`
+         7. `/performance/*` - successful implementation requires a list of scenarios and metrics
          8. `/security/*`
-         9. `/visual/*`
+         9. `/visual/*` - (optional) relevant to the needs of the project
+         10. `/unit/*` - unit test needs to import the specific function, class, or method it’s testing to run it in isolation. If you can't access the source code, you can't write a unit test. Use JEST or another relevant framework as the project requires.
       2. `/utilities`
          1. `/test-data`
       3. `test-results`
@@ -100,6 +102,9 @@ The original test plan is stored at `./test_deliverables/demo-store_test-plan.md
 
 1. Run all tests:
    - `npx playwright test`
+   - To run specific tests under a directory: `npx playwright test */<directory>`
+   - To run specific tests: `npx playwright test ./<directory>/<test name>`
+   - To run unit tests: `npm run test:unit`
 2. List generated tests:
    - `npx playwright test --list`
 
