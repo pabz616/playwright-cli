@@ -1,21 +1,19 @@
-import locators from "./locators.spec";
-
-export type DemoblazeCategory = 'Phones' | 'Laptops' | 'Monitors';
-
-export function getCategorySelector(category: DemoblazeCategory): string {
+export type ProductCategory = 'Phones' | 'Laptops' | 'Monitors';
+const { testData } = require("../../utils/testData");
+export function getCategorySelector(category: ProductCategory): string {
   switch (category) {
     case 'Phones':
-      return locators.PHONES_CATEGORY;
+      return testData.PRODUCT_CATEGORY1;
     case 'Laptops':
-      return locators.LAPTOPS_CATEGORY;
+      return testData.PRODUCT_CATEGORY2;
     case 'Monitors':
-      return locators.MONITORS_CATEGORY;
+      return testData.PRODUCT_CATEGORY3;
     default:
       throw new Error(`Unknown category: ${category}`);
   }
 }
 
-export function isValidCategory(category: string): category is DemoblazeCategory {
+export function isValidCategory(category: string): category is ProductCategory {
   return category === 'Phones' || category === 'Laptops' || category === 'Monitors';
 }
 
