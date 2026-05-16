@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { DemoblazeAPI, AuthCredentials } from "./api-helper";
-import { faker } from "@faker-js/faker";
+import testData from "../../utils/testData";
+
 
 // Chaos Tests - Simulating real-world chaotic scenarios including race conditions,
 // resource exhaustion, cascading failures, and state corruption
@@ -18,8 +19,8 @@ test.describe("Demoblaze API - Chaos Tests", () => {
     // Setup multiple users for chaos scenarios
     for (let i = 0; i < 5; i++) {
       const credentials: AuthCredentials = {
-        username: `chaos_user_${faker.string.alphanumeric(8)}@test.com`,
-        password: "ChaosTest123!",
+        username: testData.CHAOS_USER,
+        password: testData.CHAOS_PWD,
       };
       chaosUsers.push(credentials);
       await api.signup(credentials);

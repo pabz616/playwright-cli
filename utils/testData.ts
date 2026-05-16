@@ -10,5 +10,7 @@ export default{
     YEAR: "2026",
     ORDER_MSG: "Thank you for your purchase!",
     USN: "test",
-    PWD: "test"
+    PWD: "test",
+    CHAOS_USER: `chaos_user_${faker.string.alphanumeric(8)}@test.com`,
+    CHAOS_PWD:  "ChaosTest123!"
 }

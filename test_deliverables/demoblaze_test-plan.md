@@ -56,15 +56,12 @@ Assuming a 2-week sprint cycle with 1 dedicated QA engineer:
 
 - **Week 3** (if needed): Bug fixes, performance optimization, and documentation.
 
-Total estimated effort: 10-15 person-days.
+Total estimated effort: 5-10 person-days.
 
 ## Out of Scope
 
-- Performance testing (load, stress, scalability)
 - Security testing (vulnerability scanning, penetration testing)
-- Accessibility testing (WCAG compliance)
 - Mobile responsiveness testing (device-specific layouts)
-- API testing (backend service validation)
 - Database testing (data integrity, migrations)
 - Third-party integrations (payment gateways, shipping APIs)
 - Localization/internationalization testing

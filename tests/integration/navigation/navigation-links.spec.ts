@@ -13,9 +13,11 @@ test.describe("Demoblaze Product Store Homepage", () => {
   test("Verify homepage URL", async ({ page }) => {
     await expect(page).toHaveURL(testData.BASE_URL);
   });
-  test.skip("Confirm Navigation Links UI", async ({ page }) => {
-    onHomePageNavigationHeader.verifyNavigationLinks();
+
+  test("Confirm Navigation Links UI", async ({ page }) => {
+    await onHomePageNavigationHeader.verifyNavigationLinks();
   });
+
   test("Confirm Navigation to Contact page", async ({ page }) => {
     await onHomePageNavigationHeader.navigateToContact();
     await expect(page.locator("#exampleModal")).toBeVisible();
@@ -30,10 +32,12 @@ test.describe("Demoblaze Product Store Homepage", () => {
     await onHomePageNavigationHeader.navigateToCart();
     await expect(page).toHaveURL(/cart\.html$/);
   });
+
   test("Navigate to Log In page", async ({ page }) => {
     await onHomePageNavigationHeader.navigateToLogIn();
     await expect(page.locator("#logInModal")).toBeVisible();
   });
+
   test("Navigate to Sign Up page", async ({ page }) => {
     await onHomePageNavigationHeader.navigateToSignUp();
     await expect(page.locator("#signInModal")).toBeVisible();
