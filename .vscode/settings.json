@@ -7,5 +7,14 @@
       "approve": true,
       "matchCommandLine": true
     }
+  },
+  "chat.mcp.serverSampling": {
+    "playwright-cli/.vscode/mcp.json: playwright-test": {
+      "allowedModels": [
+        "copilot/auto",
+        "claude-code/claude-haiku-4.5",
+        "copilotcli/gpt-5-mini"
+      ]
+    }
   }
 }
