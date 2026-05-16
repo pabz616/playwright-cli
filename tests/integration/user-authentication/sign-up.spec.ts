@@ -10,6 +10,10 @@ test.beforeEach(async ({ page }) => {
   onSignUpForm = new SignUp(page);
 });
 
+test.afterEach(async ({ page }) => {
+  await page.close();
+});
+
 test.describe("Demoblaze Product Store - User Account Creation", () => {
   test("Sign up validation", async ({ page }) => {
     await onSignUpForm.verifySignUpValidation();

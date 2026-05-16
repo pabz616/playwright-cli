@@ -9,6 +9,10 @@ test.beforeEach(async ({ page }) => {
   onHomePageNavigationHeader = new NavigationHeader(page);
 });
 
+test.afterEach(async ({ page }) => {
+  await page.close();
+});
+
 test.describe("Demoblaze Product Store Homepage", () => {
   test("Verify homepage URL", async ({ page }) => {
     await expect(page).toHaveURL(testData.BASE_URL);

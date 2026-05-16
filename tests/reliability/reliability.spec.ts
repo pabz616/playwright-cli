@@ -7,6 +7,10 @@ test.describe("Demoblaze Product Store - Reliability", () => {
     await page.goto(testData.BASE_URL);
   });
 
+  test.afterEach(async ({ page }) => {
+  await page.close();
+});
+
   test("System remains stable under network interruptions", async ({
     page,
   }) => {

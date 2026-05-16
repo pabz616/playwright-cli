@@ -9,6 +9,10 @@ test.beforeEach(async ({ page }) => {
   onShoppingCart = new ShoppingCart(page);
 });
 
+test.afterEach(async ({ page }) => {
+  await page.close();
+});
+
 test.describe("Demoblaze Product Store - Shopping Cart", () => {
   test("Add Product To Cart", async ({ page }) => {
     await onShoppingCart.addProductToCart();

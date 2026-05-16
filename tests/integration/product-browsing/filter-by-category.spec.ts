@@ -9,6 +9,10 @@ test.beforeEach(async ({ page }) => {
   onHomePageProductBrowsing = new HomePage_ProductBrowsing(page);
 });
 
+test.afterEach(async ({ page }) => {
+  await page.close();
+});
+
 test.describe("Demoblaze Product Store - Product Filtering", () => {
   test("Filter by Phones", async ({ page }) => {
     await onHomePageProductBrowsing.filterByCategory(testData.CATEGORY1);

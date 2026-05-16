@@ -5,6 +5,10 @@ import testData from "../../utils/testData";
 test.beforeEach(async ({ page }) => {
   await page.goto(testData.BASE_URL);
 });
+
+test.afterEach(async ({ page }) => {
+  await page.close();
+});
 test.describe("Demoblaze Product Store - Accessibility Tests", () => {
   test("Home page should pass critical accessibility checks", async ({
     page,

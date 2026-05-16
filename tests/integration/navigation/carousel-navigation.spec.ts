@@ -9,6 +9,10 @@ test.beforeEach(async ({ page }) => {
   onHomePageCarousel = new Carousel(page);
 });
 
+test.afterEach(async ({ page }) => {
+  await page.close();
+});
+
 test.beforeEach(async ({ page }) => {
   await page.goto(testData.BASE_URL);
 });

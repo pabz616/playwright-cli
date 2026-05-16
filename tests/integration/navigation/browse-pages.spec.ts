@@ -9,6 +9,10 @@ test.beforeEach(async ({ page }) => {
   onStaticPages = new StaticPages(page);
 });
 
+test.afterEach(async ({ page }) => {
+  await page.close();
+});
+
 test.describe("Demoblaze Product Stores - Static Pages", () => {
   test("View About Us", async ({ page }) => {
     await onStaticPages.aboutUs();

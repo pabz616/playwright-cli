@@ -9,6 +9,10 @@ test.beforeEach(async ({ page }) => {
   onLoginForm = new LoginForm(page);
 });
 
+test.afterEach(async ({ page }) => {
+  await page.close();
+});
+
 test.describe("Demoblaze Product Store - User authentication", () => {
   test("log in validation", async ({ page }) => {
     await onLoginForm.verifyLogInValidation();

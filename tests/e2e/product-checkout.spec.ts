@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-const { testData } = require("../../utils/testData");
+import testData from "../../utils/testData";
 import ShoppingCart from "../pages/ShoppingCart";
 import HomePage_ProductBrowsing from "../pages/ProductBrowsing";
 import LoginForm from "../pages/Login";
@@ -13,6 +13,10 @@ test.beforeEach(async ({ page }) => {
   onShoppingCart = new ShoppingCart(page);
   onLoginForm = new LoginForm(page);
   onHomePageProductBrowsing = new HomePage_ProductBrowsing(page);
+});
+
+test.afterEach(async ({ page }) => {
+  await page.close();
 });
 
 test.describe("Demoblaze Product Store - Checkout Workflow", () => {

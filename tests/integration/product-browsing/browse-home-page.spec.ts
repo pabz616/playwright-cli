@@ -9,6 +9,10 @@ test.beforeEach(async ({ page }) => {
   onHomePageProductBrowsing = new HomePage_ProductBrowsing(page);
 });
 
+test.afterEach(async ({ page }) => {
+  await page.close();
+});
+
 test.describe("Demoblaze Product Store - Product browsing", () => {
   test("Browse Home Page", async ({ page }) => {
     await onHomePageProductBrowsing.verifyHomePage();
