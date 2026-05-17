@@ -562,7 +562,7 @@ test.describe("Demoblaze API - Chaos Tests", () => {
 
     for (let i = 0; i < userCount; i++) {
       const credentials: AuthCredentials = {
-        username: `storm_user_${i}_${faker.string.alphanumeric(6)}@test.com`,
+        username: `storm_user_${i}_${testData.ALPHA_NUM_STR}@test.com`,
         password: "StormTest123!",
       };
       signupRequests.push(api.signup(credentials));

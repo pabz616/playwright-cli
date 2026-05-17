@@ -222,8 +222,8 @@ test.describe.serial("Demoblaze API - Happy Path Scenarios", () => {
   test("User Profile - Update user profile", async () => {
     // Update profile information
     const updatedData = {
-      email: `${faker.person.firstName()}@example.com`,
-      phone: faker.phone.number(),
+      email: `${testData.NAME}@example.com`,
+      phone: testData.PHONE,
     };
 
     const response = await api.updateProfile(updatedData);

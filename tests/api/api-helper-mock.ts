@@ -154,7 +154,10 @@ export class DemoblazeAPI {
   private requestCount = 0;
   private failedLoginAttempts: Map<string, number> = new Map();
 
-  constructor(apiContext: APIRequestContext, baseUrl: string = testData.BASE_URL) {
+  constructor(
+    apiContext: APIRequestContext,
+    baseUrl: string = testData.BASE_URL,
+  ) {
     this.apiContext = apiContext;
     this.baseUrl = baseUrl;
   }

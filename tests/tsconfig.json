@@ -1,0 +1,17 @@
+// FILE: tsconfig.json
+// DESCRIPTION: The cleanest approach to strip Jest's global typings from the Playwright test suit
+
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "strict": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    // CRITICAL: Explicitly specify types to prevent loading everything from @types/
+    // This tells TypeScript to completely ignore @types/jest in this directory tree.
+    "types": ["node"]
+  }
+}

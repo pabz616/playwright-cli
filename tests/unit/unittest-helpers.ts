@@ -1,5 +1,5 @@
 export type ProductCategory = 'Phones' | 'Laptops' | 'Monitors';
-const { testData } = require("../../utils/testData");
+import testData from "../../utils/testData";
 export function getCategorySelector(category: ProductCategory): string {
   switch (category) {
     case 'Phones':

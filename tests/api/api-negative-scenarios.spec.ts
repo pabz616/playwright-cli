@@ -45,7 +45,7 @@ test.describe("Demoblaze API - Negative Scenarios", () => {
   test("Authentication - Login with non-existent user", async () => {
     // 1. Attempt login with non-existent user
     const credentials: AuthCredentials = {
-      username: `nonexistent_${faker.string.alphanumeric(10)}@test.com`,
+      username: `nonexistent_${testData.ALPHA_NUM_STR}@test.com`,
       password: "TestPassword123!",
     };
 

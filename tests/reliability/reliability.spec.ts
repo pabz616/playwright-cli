@@ -8,8 +8,8 @@ test.describe("Demoblaze Product Store - Reliability", () => {
   });
 
   test.afterEach(async ({ page }) => {
-  await page.close();
-});
+    await page.close();
+  });
 
   test("System remains stable under network interruptions", async ({
     page,

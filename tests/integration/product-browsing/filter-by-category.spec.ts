@@ -15,12 +15,12 @@ test.afterEach(async ({ page }) => {
 
 test.describe("Demoblaze Product Store - Product Filtering", () => {
   test("Filter by Phones", async ({ page }) => {
-    await onHomePageProductBrowsing.filterByCategory(testData.CATEGORY1);
+    await onHomePageProductBrowsing.filterByCategory(testData.PRODUCT_CATEGORY1);
   });
   test("Filter by Laptops", async ({ page }) => {
-    await onHomePageProductBrowsing.filterByCategory(testData.CATEGORY2);
+    await onHomePageProductBrowsing.filterByCategory(testData.PRODUCT_CATEGORY2);
   });
   test("Filter by Monitors", async ({ page }) => {
-    await onHomePageProductBrowsing.filterByCategory(testData.CATEGORY3);
+    await onHomePageProductBrowsing.filterByCategory(testData.PRODUCT_CATEGORY3);
   });
 });

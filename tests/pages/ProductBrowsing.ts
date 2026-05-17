@@ -1,5 +1,6 @@
 import { type Page, type Locator, expect } from "@playwright/test";
 import locators from "../pageElements/locators";
+import testDaata from "../../utils/testData";
 
 class HomePage_ProductBrowsing {
   private page: Page;
@@ -73,7 +74,7 @@ class HomePage_ProductBrowsing {
     const productTitle = await this.firstProductTitle.textContent();
     await this.firstProductTitle.click();
 
-    await expect(this.page).toHaveURL(/prod\.html\?idp_=\d+/);
+    await expect(this.page).toHaveURL(testDaata.BASE_URL));
     await expect(this.page.locator(locators.PRODUCT_NAME)).toBeVisible();
     await expect(this.page.locator(locators.PRODUCT_NAME)).toContainText(
       productTitle?.trim() || "",

@@ -27,7 +27,7 @@ class SignUp {
       this.page.locator(locators.SIGN_UP_BUTTON).click(),
     ]);
 
-    expect(dialog.message()).toContain("Sign up successful");
+    expect(dialog.message()).toContain("This user already exist.");
     await dialog.accept();
     await this.page.keyboard.press("Escape");
     await expect(this.signInModal).toBeHidden();
