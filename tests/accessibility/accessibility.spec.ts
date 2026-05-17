@@ -26,7 +26,9 @@ test.describe("Demoblaze Product Store - Accessibility Tests", () => {
   });
 
   test.skip("Product Details page accessibility", async ({ page }) => {
-    const firstProduct = page.locator(".card-title a").first();
+  //TODO - BUG: This test is currently failing due to missing alt attributes on product images, which are marked as critical by Axe.
+  
+    const firstProduct = page.locator(".card").first().getByRole("link");
     await firstProduct.click();
 
     const accessibilityScanResults = await new AxeBuilder({ page })
@@ -42,6 +44,8 @@ test.describe("Demoblaze Product Store - Accessibility Tests", () => {
   });
 
   test.skip("Login modal accessibility", async ({ page }) => {
+  //TODO - BUG: This test is currently failing due to missing labels on form inputs in the login modal, which are marked as critical by Axe.
+  
     const loginLink = page.getByRole("link", { name: "Log in" });
 
     await loginLink.click();
@@ -61,6 +65,7 @@ test.describe("Demoblaze Product Store - Accessibility Tests", () => {
   });
 
   test.skip("Sign up modal accessibility", async ({ page }) => {
+  //TODO - BUG: This test is currently failing due to missing labels on form inputs in the login modal, which are marked as critical by Axe.
     const signUpLink = page.getByRole("link", { name: "Sign up" });
 
     await signUpLink.click();
@@ -93,6 +98,7 @@ test.describe("Demoblaze Product Store - Accessibility Tests", () => {
   });
 
   test.skip("Keyboard navigation accessibility", async ({ page }) => {
+    //TODO - BUG: This test is currently failing due to missing focus styles and some interactive elements not being reachable via keyboard, which are critical accessibility issues.
     // Test tab navigation through main elements
     await page.keyboard.press("Tab");
     let focusedElement = await page.evaluate(

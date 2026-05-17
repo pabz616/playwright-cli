@@ -38,7 +38,8 @@ export default {
   CART_DELETE_HEADER: "table thead th:has-text('x')",
   CART_TOTAL: "#totalp",
   PLACE_ORDER_BUTTON: 'button:has-text("Place Order")',
-  ORDER_MODAL: "#orderModal",
+  ORDER_MODAL: '(//div[@class="modal-content"])[3]',
+  ORDER_CONFIRMATION_MODAL: '//div[contains(@class,"showSweetAlert")]',
   NAME_INPUT: "#name",
   COUNTRY_INPUT: "#country",
   CITY_INPUT: "#city",
@@ -46,7 +47,7 @@ export default {
   MONTH_INPUT: "#month",
   YEAR_INPUT: "#year",
   PURCHASE_BUTTON: 'button:has-text("Purchase")',
-  SUCCESS_ALERT: ".sweet-alert h2",
+  SUCCESS_ALERT: '//div[contains(@class,"showSweetAlert")]/h2',
 
   // STATIC PAGES
   CONTACT_MODAL: "#exampleModal",

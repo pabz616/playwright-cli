@@ -3,6 +3,7 @@ import testData from "../../utils/testData";
 import ShoppingCart from "../pages/ShoppingCart";
 import HomePage_ProductBrowsing from "../pages/ProductBrowsing";
 import LoginForm from "../pages/Login";
+import { on } from "node:cluster";
 
 let onShoppingCart: ShoppingCart;
 let onLoginForm: LoginForm;
@@ -31,6 +32,7 @@ test.describe("Demoblaze Product Store - Checkout Workflow", () => {
     await onShoppingCart.addProductToCart();
     await onShoppingCart.confirmCartUIElements();
     await onShoppingCart.placeOrder();
+    await onShoppingCart.confirmOrderDetails(testData.NAME, testData.COUNTRY);
   });
 
   test("Random Product Checkout - Add a randomly selected product", async ({

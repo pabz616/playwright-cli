@@ -12,6 +12,7 @@ class ShoppingCart {
   private orderModal: Locator;
   private deleteButton: Locator;
   private homeLink: Locator;
+  private orderConfirmationModal: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -24,6 +25,7 @@ class ShoppingCart {
     this.orderModal = page.locator(locators.ORDER_MODAL);
     this.deleteButton = page.locator("#tbodyid tr a", { hasText: "Delete" });
     this.homeLink = page.locator(locators.HOME);
+    this.orderConfirmationModal = page.locator(locators.ORDER_CONFIRMATION_MODAL);
   }
 
   async confirmCartUIElements() {
@@ -152,9 +154,13 @@ class ShoppingCart {
     await this.page.fill(locators.MONTH_INPUT, testData.MONTH);
     await this.page.fill(locators.YEAR_INPUT, testData.YEAR);
     await this.page.locator(locators.PURCHASE_BUTTON).click();
-    await expect(this.page.locator(locators.SUCCESS_ALERT)).toHaveText(
-      testData.ORDER_MSG,
-    );
+  }
+
+  async confirmOrderDetails(expectedName: string, expectedCountry: string) {
+    const confirmationText = await this.orderConfirmationModal.textContent();
+    await expect(this.orderConfirmationModal).toBeVisible();
+    await expect(this.page.locator(locators.SUCCESS_ALERT)).toHaveText(testData.ORDER_MSG,);
+    await expect(confirmationText).toContain(expectedName);
   }
 
   async verifyOrderConfirmation() {

@@ -46,8 +46,6 @@ test.describe("Demoblaze Product Store - Reliability", () => {
     // Navigate to a product
     await page.locator(locators.FIRST_PRODUCT_TITLE).first().click();
     await expect(page.locator(locators.PRODUCT_NAME)).toBeVisible();
-    const productName = await page.locator(locators.PRODUCT_NAME).textContent();
-
     // Refresh
     await page.reload();
     // Should still be on product page or back to home? Assuming back to home for demo
