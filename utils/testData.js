@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const faker_1 = require("@faker-js/faker");
 exports.default = {
     BASE_URL: "https://www.demoblaze.com/",
+    QAPLAYGROUND_NTWK: "https://playwright-playground.com/network/mocking",
     NAV_LINKS: ["Home", "Contact", "About us", "Cart", "Log in", "Sign up"],
     NAME: "Demo Tester: " + faker_1.faker.string.alphanumeric(3),
     EMAIL: faker_1.faker.internet.email(),

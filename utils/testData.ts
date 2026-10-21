@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 
 export default {
   BASE_URL: "https://www.demoblaze.com/",
+  QAPLAYGROUND_NTWK: "https://playwright-playground.com/network/mocking",
   NAV_LINKS: ["Home", "Contact", "About us", "Cart", "Log in", "Sign up"],
   NAME: "Demo Tester: "+ faker.string.alphanumeric(3),
   EMAIL: faker.internet.email(),
