@@ -13,9 +13,6 @@ test.afterEach(async ({ page }) => {
   await page.close();
 });
 
-test.beforeEach(async ({ page }) => {
-  await page.goto(testData.BASE_URL);
-});
 test.describe("Demoblaze Product Store Carousel", () => {
   test("Carousel Navigation", async ({ page }) => {
     await onHomePageCarousel.verifyCarouselUI();

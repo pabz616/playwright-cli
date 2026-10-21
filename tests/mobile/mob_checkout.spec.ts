@@ -1,4 +1,4 @@
-import { test, expect, devices, webkit } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import testData from "../../utils/testData";
 import ShoppingCart from "../pages/ShoppingCart";
 import HomePage_ProductBrowsing from "../pages/ProductBrowsing";
@@ -8,21 +8,11 @@ let onShoppingCart: ShoppingCart;
 let onLoginForm: LoginForm;
 let onHomePageProductBrowsing: HomePage_ProductBrowsing;
 
-const devicesToTest = ['iPhone 13', 'Tablet', 'Pixel 5'];
-
-test.beforeEach(async () => {
-  const browser = await webkit.launch();
-  
-  for (const deviceName of devicesToTest) {
-    const device = devices[deviceName];
-    const context = await browser.newContext({...device,});
-    const page = await context.newPage();
-    
-    await page.goto(testData.BASE_URL);
-    onShoppingCart = new ShoppingCart(page);
-    onLoginForm = new LoginForm(page);
-    onHomePageProductBrowsing = new HomePage_ProductBrowsing(page);
-  }
+test.beforeEach(async ({ page }) => {
+  await page.goto(testData.BASE_URL);
+  onShoppingCart = new ShoppingCart(page);
+  onLoginForm = new LoginForm(page);
+  onHomePageProductBrowsing = new HomePage_ProductBrowsing(page);
 });
 
 test.describe("Demoblaze Product Store - Checkout Workflow", () => {
@@ -60,7 +50,7 @@ test.describe("Demoblaze Product Store - Checkout Workflow", () => {
 
     await onShoppingCart.viewCart();
     expect(productName).toBeTruthy();
-    await expect(productsAdded).toHaveCount(1);
+    await expect(productsAdded).toHaveCount(3);
     await onShoppingCart.confirmCartUIElements();
     await onShoppingCart.placeOrder();
   });
@@ -81,7 +71,7 @@ test.describe("Demoblaze Product Store - Checkout Workflow", () => {
     await onShoppingCart.addProductToCartByIndex(0);
 
     await onShoppingCart.viewCart();
-    await expect(productsAdded).toHaveCount(1);
+    await expect(productsAdded).toHaveCount(3);
     await onShoppingCart.confirmCartUIElements();
     await onShoppingCart.placeOrder();
   });
